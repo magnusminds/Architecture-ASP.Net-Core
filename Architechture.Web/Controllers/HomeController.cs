@@ -1,17 +1,16 @@
-﻿using Architecture.Web.Configuration;
-using Architecture.Web.Models;
-using Microsoft.AspNetCore.Hosting;
+﻿using Architechture.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
-namespace Architecture.Web.Controllers
+namespace Architechture.Web.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
-        public HomeController(IHostingEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider ,SiteConfiguration siteConfiguration) : base(hostingEnvironment, modelMetadataProvider, siteConfiguration)
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
         {
+            _logger = logger;
         }
 
         public IActionResult Index()

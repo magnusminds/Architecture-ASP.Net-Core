@@ -1,4 +1,5 @@
-﻿using Architecture.ILogger.Serilog;
+﻿using Architecture.BusinessLogic.Repositories;
+using Architecture.ILogger.Serilog;
 using Architecture.Utility;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

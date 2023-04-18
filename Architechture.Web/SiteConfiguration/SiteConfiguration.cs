@@ -8,8 +8,8 @@ namespace Architecture.Web.Configuration
     {
         public const string xmlDocumentPath = "SiteConfiguration";
         public const string xmlDocumentPathFileName = "SiteConfiguration.xml";
-        private readonly IHostingEnvironment _host;
-        public SiteConfiguration(IHostingEnvironment host)
+        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _host;
+        public SiteConfiguration(Microsoft.AspNetCore.Hosting.IHostingEnvironment host)
         {
             _host = host;
             customConfiguration = XMLSerializeDeSerialize.DeSerializeObject<CustomConfiguration>(Path.Combine(_host.ContentRootPath, xmlDocumentPath, xmlDocumentPathFileName));

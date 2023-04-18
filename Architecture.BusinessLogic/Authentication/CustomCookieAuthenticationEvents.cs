@@ -1,4 +1,4 @@
-﻿using Architecture.Interface;
+﻿using Architecture.DataAccess.Interface;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Linq;
@@ -9,9 +9,9 @@ namespace Architecture.BusinessLogic.Authentication
 {
     public class CustomCookieAuthenticationEvents : CookieAuthenticationEvents
     {
-        private readonly IUser _userRepository;
+        private readonly IUserDA _userRepository;
 
-        public CustomCookieAuthenticationEvents(IUser userRepository)
+        public CustomCookieAuthenticationEvents(IUserDA userRepository)
         {
             // Get the database from registered DI services.
             _userRepository = userRepository;

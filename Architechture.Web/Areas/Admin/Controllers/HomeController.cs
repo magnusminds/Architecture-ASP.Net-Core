@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Architecture.BusinessLogic;
+using Architecture.BusinessLogic.Repositories;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace Architecture.Web.Areas.Admin.Controllers
 {

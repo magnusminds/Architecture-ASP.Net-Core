@@ -13,6 +13,8 @@ using Amazon;
 using System.Drawing;
 using Amazon.S3.Model;
 using System.Linq;
+using Architecture.Core.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ImageResizeWebApp.Controllers
 {
@@ -141,6 +143,7 @@ namespace ImageResizeWebApp.Controllers
         // upload Image in AWS
         //// POST /images/upload
         [HttpPost("images/upload1")]
+        //[Authorize(ApplicationIdentityConstants.Permissions.Image.Create)]
         //[HttpPost("[action]")]
         public async Task<IActionResult> Upload(ICollection<IFormFile> files)
         {
@@ -249,6 +252,7 @@ namespace ImageResizeWebApp.Controllers
         // upload Image in AZURE
         //// POST /images/upload
         [HttpPost("images/upload")]
+        //[Authorize(ApplicationIdentityConstants.Permissions.Image.Create)]
         //[HttpPost("[action]")]
         public async Task<IActionResult> Upload1(ICollection<IFormFile> files)
         {
@@ -320,6 +324,7 @@ namespace ImageResizeWebApp.Controllers
 
         // GET /api/images/thumbnails
         [HttpGet]
+        //[Authorize(ApplicationIdentityConstants.Permissions.Image.View)]
         //[HttpGet("thumbnails")]
         public async Task<IActionResult> thumbnails()
         {

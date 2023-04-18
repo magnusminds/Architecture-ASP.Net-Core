@@ -11,18 +11,27 @@ namespace Architecture.BusinessLogic
     {
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            Logger.UserActionLoggin(JsonSerializeDeserializer.JsonString(new SeriLogEntryEntity()
+            try
             {
-                QueryString = context.HttpContext.Request.QueryString.Value,
-                RequetForm = context.HttpContext.Request.HasFormContentType ? string.Join(",", context.HttpContext.Request.Form.Select(x => "\""+x.Key + "\"" + " : " + "\"" + x.Value+"\"" )) :"",
-                TimeStamp = DateTime.UtcNow,
-                ActionDescriptor = context.ActionDescriptor.DisplayName,
-                IpAddress = context.HttpContext.Connection.RemoteIpAddress.ToString(),
-                //Message = context.Exception.Message,
-                RequestId = Activity.Current?.Id ?? context.HttpContext.TraceIdentifier,
-                RequestPath = context.HttpContext.Request.Path,
-                User = context.HttpContext.User.HasClaim(x => x.Type == CustomClaimTypes.Email.ToString()) ? context.HttpContext.User.Claims.FirstOrDefault(x => x.Type == CustomClaimTypes.Email.ToString()).Value : null
-            }), Serilog.Events.LogEventLevel.Information);
+                Logger.UserActionLoggin(JsonSerializeDeserializer.JsonString(new SeriLogEntryEntity()
+                {
+                    QueryString = context.HttpContext.Request.QueryString.Value,
+                    RequetForm = context.HttpContext.Request.HasFormContentType ? string.Join(",", context.HttpContext.Request.Form.Select(x => "\"" + x.Key + "\"" + " : " + "\"" + x.Value + "\"")) : "",
+                    TimeStamp = DateTime.UtcNow,
+                    ActionDescriptor = context.ActionDescriptor.DisplayName,
+                    IpAddress = context.HttpContext.Connection.RemoteIpAddress.ToString(),
+                    //Message = context.Exception.Message,
+                    RequestId = Activity.Current?.Id ?? context.HttpContext.TraceIdentifier,
+                    RequestPath = context.HttpContext.Request.Path,
+                    User = context.HttpContext.User.HasClaim(x => x.Type == CustomClaimTypes.Email.ToString()) ? context.HttpContext.User.Claims.FirstOrDefault(x => x.Type == CustomClaimTypes.Email.ToString()).Value : null
+                }), Serilog.Events.LogEventLevel.Information);
+            }
+
+            catch(Exception ex)
+            {
+
+            }
+            
         }
         public void OnActionExecuted(ActionExecutedContext context)
         {

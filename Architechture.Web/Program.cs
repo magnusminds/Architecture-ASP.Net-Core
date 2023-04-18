@@ -1,17 +1,13 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+using Architechture.Web.Configuration;
 
-namespace Architecture.Web
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-    {
-            CreateWebHostBuilder(args).Build().Run();
-        }
+var builder = WebApplication.CreateBuilder(args);
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
-    }
-}
+builder.ConfigureBuilder();
+
+builder.Build().ConfigureWebApplication();
+
+
+
+
+
+

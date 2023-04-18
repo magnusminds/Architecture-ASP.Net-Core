@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Threading.Tasks;
+using Architecture.BusinessLogic.Repositories;
+using Architechture.Web.Controllers;
 
 namespace Architecture.Web.Controllers
 {
@@ -13,7 +15,7 @@ namespace Architecture.Web.Controllers
     {
         private IUsersBL _usersBL;
 
-        public LoginController(IUsersBL usersBL, IHostingEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider,SiteConfiguration siteConfiguration) : base(hostingEnvironment, modelMetadataProvider, siteConfiguration)
+        public LoginController(IUsersBL usersBL, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider,SiteConfiguration siteConfiguration) : base(hostingEnvironment, modelMetadataProvider, siteConfiguration)
         {
             _usersBL = usersBL;
         }

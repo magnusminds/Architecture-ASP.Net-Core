@@ -7,31 +7,38 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Architecture.Core.Constants;
+using Architecture.BusinessLogic.Repositories;
+using Architechture.Web.Controllers;
 
 namespace Architecture.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
-    [PermissionFilter(permission: "Admin", customClaimTypes: CustomClaimTypes.RoleName)]
+    [PermissionFilter(permission: "Admin", customClaimTypes: Architecture.BusinessLogic.CustomClaimTypes.RoleName)]
     public class UsersController : BaseController
     {
         private IUsersBL _usersBL;
 
-        public UsersController(IUsersBL usersBL, IHostingEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider, SiteConfiguration siteConfiguration) : base(hostingEnvironment, modelMetadataProvider, siteConfiguration)
+        public UsersController(IUsersBL usersBL, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider, SiteConfiguration siteConfiguration) : base(hostingEnvironment, modelMetadataProvider, siteConfiguration)
         {
             _usersBL = usersBL;
         }
+
+        //[Authorize(ApplicationIdentityConstants.Permissions.Users.View)]
         public IActionResult Index()
         {
             var data = _usersBL.GetUsersEntity();
             return View(data);
         }
         [HttpGet]
+        //[Authorize(ApplicationIdentityConstants.Permissions.Users.Create)]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
+       // [Authorize(ApplicationIdentityConstants.Permissions.Users.Create)]
         public IActionResult Create(UsersEntity users)
         {
             try
@@ -49,13 +56,18 @@ namespace Architecture.Web.Areas.Admin.Controllers
             }
             return View(users);
         }
+
         [HttpGet]
+       // [Authorize(ApplicationIdentityConstants.Permissions.Users.View)]
         public IActionResult Edit(long Id)
         {
             var oldUser = _usersBL.GetUsersEntityById(Id);
             return View(oldUser);
         }
+
+
         [HttpPost]
+       // [Authorize(ApplicationIdentityConstants.Permissions.Users.Update)]
         public IActionResult Edit(UsersEntity users)
         {
             try

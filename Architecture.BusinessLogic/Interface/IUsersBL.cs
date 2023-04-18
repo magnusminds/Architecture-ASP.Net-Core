@@ -1,8 +1,7 @@
 ﻿using Architecture.Entities;
-using Architecture.Interface;
 using System.Collections.Generic;
 
-namespace Architecture.BusinessLogic
+namespace Architecture.BusinessLogic.Repositories
 {
     public interface IUsersBL
     {
