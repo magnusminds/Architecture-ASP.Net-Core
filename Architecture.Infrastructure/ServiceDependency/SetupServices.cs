@@ -1,19 +1,18 @@
-﻿using Architecture.Dto;
+﻿using Architecture.BusinessLogic.Extension;
+using Architecture.Core.Localizer.JsonString;
+using Architecture.DataAccess.Extention;
+using Architecture.Dto;
+using Architecture.Infrastructure.Identity.Authorize;
 using Architecture.Infrastructure.Identity.Models;
 using Architecture.Infrastructure.Services.Email;
 using Architecture.Infrastructure.Services.Token;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Text;
-using Architecture.Infrastructure.Extensions;
-using Architecture.BusinessLogic.Extension;
-using Architecture.Core.Localizer.JsonString;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Architecture.DataAccess.Extention;
+using System.Text;
 using static Architecture.Core.Constants.ApplicationIdentityConstants;
-using Architecture.Infrastructure.Identity.Authorize;
 
 namespace Architecture.Infrastructure.ServiceDependency
 {

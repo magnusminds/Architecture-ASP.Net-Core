@@ -1,4 +1,4 @@
-﻿using Architecture.Entities;
+﻿using Architecture.Entities.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

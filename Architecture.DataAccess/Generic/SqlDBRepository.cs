@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Architecture.DataBase.DatabaseFirst;
+using Architecture.Entities;
 using MagnusMinds.Utility;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +13,7 @@ namespace Architecture.DataAccess.Generic
     {
         #region Fields
 
-        private readonly AdminContext _context;
+        private readonly ApplicationDbContext _context;
 
         private DbSet<TEntity> _entities;
 
@@ -21,7 +21,7 @@ namespace Architecture.DataAccess.Generic
 
         #region Ctor
 
-        public SqlDBRepository(AdminContext context)
+        public SqlDBRepository(ApplicationDbContext context)
         {
             this._context = context;
         }

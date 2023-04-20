@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Architecture.Core\Architecture.Core.csproj" />
-    <ProjectReference Include="..\Architecture.Data\Architecture.DataBase.csproj" />
     <ProjectReference Include="..\Architecture.Dto\Architecture.Dto.csproj" />
     <ProjectReference Include="..\Architecture.Entities\Architecture.Entities.csproj" />
   </ItemGroup>

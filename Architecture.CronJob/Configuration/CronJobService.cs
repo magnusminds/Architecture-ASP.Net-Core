@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Hosting;
-
 using Architecture.BusinessLogic.Interface;
 using Cronos;
 

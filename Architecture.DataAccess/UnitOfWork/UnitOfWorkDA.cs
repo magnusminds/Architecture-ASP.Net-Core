@@ -1,29 +1,31 @@
 ﻿using Architecture.DataAccess.Interface;
-using Architecture.DataBase.DatabaseFirst;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Architecture.Entities;
 
 namespace Architecture.DataAccess.UnitOfWork
 {
-    public class UnitOfWorkDA
+    public class UnitOfWorkDA : IUnitOfWorkDA
     {
-        private readonly AdminContext _context;
+        private readonly ApplicationDbContext _context;
 
         public IUserDA UserDA { get; }
         public IRoleDA RoleDA { get; }
 
         public IUserRolesDA RolesDA { get; }
 
-        public UnitOfWorkDA(AdminContext context, IUserDA userDA, IRoleDA roleDA,IUserRolesDA rolesDA)
+        public IRolePermissionDA RolePermissionDA { get; }
+
+        public ILoginTokenDA LoginTokenDA { get; }
+
+        public UnitOfWorkDA(ApplicationDbContext context, IUserDA userDA, IRoleDA roleDA, IUserRolesDA rolesDA, IRolePermissionDA rolePermissionDA, ILoginTokenDA loginTokenDA)
         {
             {
                 this._context = context;
                 this.UserDA = userDA;
                 this.RoleDA = roleDA;
                 this.RolesDA = rolesDA;
+                this.RolePermissionDA = rolePermissionDA;
+                this.LoginTokenDA = loginTokenDA;
+
             }
         }
 

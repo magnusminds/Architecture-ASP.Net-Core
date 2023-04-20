@@ -1,17 +1,5 @@
-﻿using Architecture.BusinessLogic.Interface;
-using Architecture.CronJob.Configuration;
-using Architecture.CronJob.Service.Email.Interface;
-using Architecture.CronJob.Service.Email.Repository;
-using Architecture.CronJob.Service.SMS.Interface;
-using Architecture.CronJob.Service.SMS.Repository;
-using Architecture.CronJob.Service.WhatsApp.Interface;
-using Architecture.CronJob.Service.WhatsApp.Repository;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.DependencyInjection;
+
 
 namespace Architecture.CronJob
 {

@@ -1,31 +1,25 @@
-﻿using Architecture.DataBase.DatabaseFirst;
-using Architecture.BusinessLogic;
-using Microsoft.EntityFrameworkCore;
+﻿
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Architecture.DataAccess.Interface;
-using Architecture.BusinessLogic.Repositories;
 using Architecture.BusinessLogic.Interface;
+using Architecture.Entities;
 
 namespace Architecture.BusinessLogic.UnitOfWork
 {
     public class UnitOfWorkBL : IUnitOfWorkBL
     {
-        private readonly AdminContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public ILogEntryBL LogEntryBL { get; }
+    
 
         public IUsersBL UserBL { get; }
 
         public IEmailSenderBL EmailSenderBL { get; }
 
-        public UnitOfWorkBL(AdminContext context, ILogEntryBL LogEntryBL, IUsersBL UserBL)
+        public IRolePermissionBL RolePermissionBL { get; }
+
+        public UnitOfWorkBL(ApplicationDbContext context, IUsersBL UserBL)
         {
             this._context = context;
-            this.LogEntryBL = LogEntryBL;
             this.UserBL = UserBL;
         }
 

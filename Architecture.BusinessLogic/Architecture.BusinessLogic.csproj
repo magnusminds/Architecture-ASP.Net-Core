@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Core" Version="2.2.0" />
@@ -15,8 +16,6 @@
     <ProjectReference Include="..\Architecture.DataAccess\Architecture.DataAccess.csproj" />
     <ProjectReference Include="..\Architecture.Dto\Architecture.Dto.csproj" />
     <ProjectReference Include="..\Architecture.Entities\Architecture.Entities.csproj" />
-    <ProjectReference Include="..\Architecture.ILogger\Architecture.ILogger.csproj" />
-    <ProjectReference Include="..\Architecture.Utility\Architecture.Utility.csproj" />
   </ItemGroup>
 
 </Project>

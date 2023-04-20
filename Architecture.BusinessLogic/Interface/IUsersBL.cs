@@ -1,16 +1,42 @@
-﻿using Architecture.Entities;
+﻿using Architecture.Dto.User;
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
+using Architecture.Dto.DataTable;
+using Architecture.Entities.Model;
 
-namespace Architecture.BusinessLogic.Repositories
+namespace Architecture.BusinessLogic.Interface
 {
     public interface IUsersBL
     {
-        List<UsersEntity> GetUsersEntity(int pageIndex = 0, int pageSize = int.MaxValue);
-        UsersEntity CreataUser(UsersEntity user);
-        UsersEntity UpdateUser(UsersEntity user);
-        UsersEntity GetUsersEntityById(long userId);
-        LoginViewModelResponse Validateuser(string userName, string password);
-        bool CheckEmail(string userName);
-        void GeneratePassword(string userId, string password, string passwordEncryptionSecurityKey);
+        public Task<IQueryable<ApplicationUser>> GetAllUsers(CancellationToken cancellationToken);
+
+        public Task<IList<ApplicationRole>> GetAllRoles(CancellationToken cancellationToken);
+
+        public Task<IQueryable<IdentityUserRole<string>>> GetUserRoles(CancellationToken cancellationToken);
+
+        public Task<JsonRepsonse<UserResponseDto>> GetFilterUserData(UserDataTableFilterDto dataTableFilterDto, CancellationToken cancellationToken);
+
+        public Task<UserRequestDto> GetById(int Id, CancellationToken cancellationToken);
+
+        public Task<UserRequestDto> CreateUser(UserRequestDto model, CancellationToken cancellationToken);
+
+        public Task<UserRequestDto> UpdateUser(int Id, UserRequestDto model, CancellationToken cancellationToken);
+
+        public Task<UserRequestDto> DeleteUser(int Id, CancellationToken cancellationToken);
+
+        public Task<UserRequestDto> ReactiveUser(int Id, CancellationToken cancellationToken);
+
+        public Task<bool> ValidateUserEmail(UserRequestDto userRequestDto, CancellationToken cancellationToken);
+
+        public Task<bool> ValidateUserPhoneNumber(UserRequestDto userRequestDto, CancellationToken cancellationToken);
+
+        public Task<bool> ValidateOldPassword(string currentPassword, CancellationToken cancellationToken);
+
+        public Task<UserRequestDto> ChangePassword(ChangePasswordRequestDto model, CancellationToken cancellationToken);
+
+        public Task<UserRequestDto> ResetPassword(ResetPasswordRequestDto model, CancellationToken cancellationToken);
     }
 }

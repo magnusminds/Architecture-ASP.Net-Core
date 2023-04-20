@@ -1,6 +1,7 @@
 ﻿using Architecture.Core.Constants;
-using Architecture.DataBase.DatabaseFirst;
+
 using Architecture.Entities;
+using Architecture.Entities.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,17 +24,17 @@ namespace Architecture.Infrastructure.ServiceDependency
 
             if (dataBaseEnvironment == "MSSQL")
             {
-                services.AddDbContext<AdminContext>(options =>
+                services.AddDbContext<ApplicationDbContext>(options =>
                 {
                     if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
                         options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
-                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("MidCapERP.DataEntities"));
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Architecture.Entities"));
                 });
             }
 
             if (dataBaseEnvironment == "MYSQL")
             {
-                services.AddDbContextPool<AdminContext>(options =>
+                services.AddDbContextPool<ApplicationDbContext>(options =>
                 {
                     options.UseMySql(
                         configuration.GetConnectionString("DefaultConnection"),
@@ -49,7 +50,7 @@ namespace Architecture.Infrastructure.ServiceDependency
                     .AddDefaultTokenProviders()
                     .AddUserManager<UserManager<ApplicationUser>>()
                     .AddSignInManager<SignInManager<ApplicationUser>>()
-                    .AddEntityFrameworkStores<AdminContext>();
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
             services.Configure<IdentityOptions>(
                 options =>
                 {

@@ -1,12 +1,8 @@
 ﻿using Architecture.CronJob.Service.Email.Interface;
 using Architecture.Dto;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
+
 
 namespace Architecture.CronJob.Service.Email.Repository
 {

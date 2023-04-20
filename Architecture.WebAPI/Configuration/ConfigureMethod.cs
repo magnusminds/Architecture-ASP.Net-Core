@@ -1,8 +1,8 @@
-﻿using static System.Net.Mime.MediaTypeNames;
+﻿using Architecture.Infrastructure.Extensions;
 using Architecture.WebAPI.Middleware;
-using Architecture.Infrastructure.Extensions;
 using AutoWrapper;
 using Serilog;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Architecture.WebAPI.Configuration
 {
@@ -11,8 +11,10 @@ namespace Architecture.WebAPI.Configuration
         public static void ConfigureWebApplication(this WebApplication app)
         {
             var configuration = app.Services.GetRequiredService<IConfiguration>();
+
             // seed the default data
-            //app.Services.SeedIdentityDataAsync().Wait();
+            app.Services.SeedIdentityDataAsync().Wait();
+
 
             // Set Common DateTime Format Globally
             //app.ConfigureCulture();
@@ -27,6 +29,9 @@ namespace Architecture.WebAPI.Configuration
             app.UseSerilogRequestLogging();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
             if (string.Equals(configuration["AppSettings:EnableSwagger"], "true", StringComparison.CurrentCultureIgnoreCase))
             {
                 app.UseSwagger();

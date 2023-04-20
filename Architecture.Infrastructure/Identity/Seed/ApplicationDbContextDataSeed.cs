@@ -1,12 +1,7 @@
 ﻿using Architecture.Core.Constants;
-using Architecture.Entities;
+using Architecture.Entities.Model;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Architecture.Infrastructure.Identity.Seed
 {
@@ -51,7 +46,7 @@ namespace Architecture.Infrastructure.Identity.Seed
 
         private static async Task GrantPermissionToAdminUser(RoleManager<ApplicationRole> roleManager, ApplicationRole administratorRole)
         {
-            var collection = new List<string>() { "Users", "Role", "Dashboard", "Lookup", "Status", "Contractor", "SubjectType", "LookupValues", "ContractorCategoryMapping", "Customer", "ErrorLogs", "Category", "Company", "Unit", "FrameType", "AccessoriesType", "RawMaterial", "Accessories", "Fabric", "Frame", "Polish", "RolePermission", "Product", "Order"
+            var collection = new List<string>() { "Users", "Role", "Dashboard" 
                 };
             foreach (var item in collection)
             {

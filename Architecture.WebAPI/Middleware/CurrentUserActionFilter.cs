@@ -1,6 +1,6 @@
 ﻿using Architecture.Core.Constants;
 using Architecture.Dto;
-using Architecture.Entities;
+using Architecture.Entities.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -17,7 +17,7 @@ namespace Architecture.WebAPI.Middleware
             _currentUser = currentUser;
             _userManager = userManager;
             _roleManager = roleManager;
-           
+
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -37,12 +37,12 @@ namespace Architecture.WebAPI.Middleware
                     {
                         var userRoleNames = await _userManager.GetRolesAsync(user);
                         var userRoles = _roleManager.Roles.Where(x => userRoleNames.Contains(x.Name)).FirstOrDefault();
-                        _currentUser.UserId = user.Id;
+                        _currentUser.UserId = Convert.ToInt32(user.Id);
                         _currentUser.Name = user.FirstName;
                         _currentUser.FullName = user.FullName;
                         _currentUser.EmailAddress = user.Email;
-                        _currentUser.RoleId = userRoles?.Id;
-                        _currentUser.Role = userRoles?.Name;
+                        _currentUser.RoleId = 0;
+                        _currentUser.Role = string.Empty;
 
                         //if (context.HttpContext.Request.Cookies[ApplicationIdentityConstants.TenantCookieName] != null)
                         //{

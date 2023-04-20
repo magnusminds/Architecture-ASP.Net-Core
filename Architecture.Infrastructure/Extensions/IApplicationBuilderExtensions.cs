@@ -1,4 +1,4 @@
-﻿using Architecture.Entities;
+﻿using Architecture.Entities.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 

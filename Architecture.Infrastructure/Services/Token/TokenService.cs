@@ -1,21 +1,21 @@
 ﻿using Architecture.Core.Constants;
-using Architecture.Entities;
+using Architecture.Core.UserDefinedException;
+using Architecture.DataAccess.Interface;
+using Architecture.DataAccess.UnitOfWork;
+using Architecture.Entities.Model;
+using Architecture.Infrastructure.Identity.Models;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using Architecture.Infrastructure.Identity.Models;
 
 namespace Architecture.Infrastructure.Services.Token
 {
@@ -26,8 +26,12 @@ namespace Architecture.Infrastructure.Services.Token
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly TokenConfiguration _token;
         private readonly HttpContext _httpContext;
+        private readonly IUnitOfWorkDA _unitOfWorkDA;
+        public readonly IMapper _mapper;
+        private readonly ILoginTokenDA _loginDA;
 
         public TokenService(
+           IUnitOfWorkDA unitOfWorkDA,
            UserManager<ApplicationUser> userManager,
            SignInManager<ApplicationUser> signInManager,
            RoleManager<ApplicationRole> roleManager,
@@ -38,13 +42,13 @@ namespace Architecture.Infrastructure.Services.Token
             _signInManager = signInManager;
             _roleManager = roleManager;
             _token = tokenOptions.Value;
-
+            _unitOfWorkDA = unitOfWorkDA;
             _httpContext = httpContextAccessor.HttpContext;
 
         }
 
 
-        /// <inheritdoc cref="ITokenService.Authenticate(TokenRequest, string)"/>
+        // <inheritdoc cref = "ITokenService.Authenticate(TokenRequest, string)" />
         public async Task<TokenResponse> Authenticate(TokenRequest request, string ipAddress, CancellationToken cancellationToken, bool isCookie = false)
         {
             if (await IsValidUser(request.Username, request.Password, cancellationToken))
@@ -60,83 +64,83 @@ namespace Architecture.Infrastructure.Services.Token
             return null;
         }
 
-        //public async Task GenerateOTP(TokenOtpGenerateRequest request, CancellationToken cancellationToken)
-        //{
-        //    string data = string.Empty;
+        public async Task GenerateOTP(TokenOtpGenerateRequest request, CancellationToken cancellationToken)
+        {
+            string data = string.Empty;
 
-        //    var user = await GetUserByPhoneNo(request, cancellationToken);
-        //    if (user != null)
-        //    {
-        //        var otpLogin = await _loginDA.GetAll(cancellationToken);
-        //        var oldLoginTokenByPhoneNo = otpLogin.FirstOrDefault(p => p.PhoneNumber == request.PhoneNo);
+            var user = await GetUserByPhoneNo(request, cancellationToken);
+            if (user != null)
+            {
+                var otpLogin = await _loginDA.GetAll(cancellationToken);
+                var oldLoginTokenByPhoneNo = otpLogin.FirstOrDefault(p => p.PhoneNumber == request.PhoneNo);
 
-        //        if (oldLoginTokenByPhoneNo == null)
-        //        {
-        //            OTPLogin loginToken = new OTPLogin()
-        //            {
-        //                PhoneNumber = request.PhoneNo,
-        //                OTP = "0000",// new Random().Next(1, 9999).ToString("D4"),
-        //                ExpiryTime = DateTime.UtcNow.AddMinutes(10),
-        //            };
+                if (oldLoginTokenByPhoneNo == null)
+                {
+                    OTPLogin loginToken = new OTPLogin()
+                    {
+                        PhoneNumber = request.PhoneNo,
+                        OTP = "0000",// new Random().Next(1, 9999).ToString("D4"),
+                        ExpiryTime = DateTime.UtcNow.AddMinutes(10),
+                    };
 
-        //            var createdToken = await _loginDA.CreateLoginToken(loginToken, cancellationToken);
-        //            data = createdToken.OTP;
-        //        }
-        //        else
-        //        {
-        //            oldLoginTokenByPhoneNo.OTP = "0000";
-        //            //oldLoginTokenByPhoneNo.OTP = new Random().Next(1, 9999).ToString("D4");
-        //            oldLoginTokenByPhoneNo.ExpiryTime = DateTime.UtcNow.AddMinutes(10);
-        //            var createdToken = await _loginDA.UpdateLoginToken(oldLoginTokenByPhoneNo, cancellationToken);
-        //            data = createdToken.OTP;
-        //        }
+                    var createdToken = await _loginDA.CreateLoginToken(loginToken, cancellationToken);
+                    data = createdToken.OTP;
+                }
+                else
+                {
+                    oldLoginTokenByPhoneNo.OTP = "0000";
+                    //oldLoginTokenByPhoneNo.OTP = new Random().Next(1, 9999).ToString("D4");
+                    oldLoginTokenByPhoneNo.ExpiryTime = DateTime.UtcNow.AddMinutes(10);
+                    var createdToken = await _loginDA.UpdateLoginToken(oldLoginTokenByPhoneNo, cancellationToken);
+                    data = createdToken.OTP;
+                }
 
-        //        //Send OTP to Someone through SMS or Email
-        //    }
-        //    else
-        //    {
-        //        throw new Exception("User not found");
-        //    }
-        //}
+                //Send OTP to Someone through SMS or Email
+            }
+            else
+            {
+                throw new Exception("User not found");
+            }
+        }
 
-        //public async Task<TokenResponse> AuthenticateAPI(TokenAPIRequest request, CancellationToken cancellationToken)
-        //{
-        //    var loginTokens = await _loginDA.GetAll(cancellationToken);
-        //    var oldLoginTokenByPhoneNo = loginTokens.FirstOrDefault(p => p.PhoneNumber == request.PhoneNo);
+        public async Task<TokenResponse> AuthenticateAPI(TokenAPIRequest request, CancellationToken cancellationToken)
+        {
+            var loginTokens = await _loginDA.GetAll(cancellationToken);
+            var oldLoginTokenByPhoneNo = loginTokens.FirstOrDefault(p => p.PhoneNumber == request.PhoneNo);
 
-        //    if (oldLoginTokenByPhoneNo != null)
-        //    {
-        //        if (oldLoginTokenByPhoneNo.OTP == request.OTP)
-        //        {
-        //            if (DateTime.UtcNow < oldLoginTokenByPhoneNo.ExpiryTime)
-        //            {
-        //                TokenOtpGenerateRequest tokenOtpGenerate = new TokenOtpGenerateRequest();
-        //                tokenOtpGenerate.PhoneNo = request.PhoneNo;
-        //                tokenOtpGenerate.MobileDeviceId = request.MobileDeviceId;
-        //                var user = await GetUserByPhoneNo(tokenOtpGenerate, cancellationToken);
-        //                await _signInManager.SignInAsync(user, isPersistent: false);
-        //                return await GenerateAuthentication(false, user, cancellationToken);
-        //            }
-        //            throw new Exception("OTP was Expired");
-        //        }
-        //        throw new Exception("OTP is wrong");
-        //    }
-        //    throw new Exception("Phone No is not Registered");
-        //}
+            if (oldLoginTokenByPhoneNo != null)
+            {
+                if (oldLoginTokenByPhoneNo.OTP == request.OTP)
+                {
+                    if (DateTime.UtcNow < oldLoginTokenByPhoneNo.ExpiryTime)
+                    {
+                        TokenOtpGenerateRequest tokenOtpGenerate = new TokenOtpGenerateRequest();
+                        tokenOtpGenerate.PhoneNo = request.PhoneNo;
+                        tokenOtpGenerate.MobileDeviceId = request.MobileDeviceId;
+                        var user = await GetUserByPhoneNo(tokenOtpGenerate, cancellationToken);
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return await GenerateAuthentication(false, user, cancellationToken);
+                    }
+                    throw new Exception("OTP was Expired");
+                }
+                throw new Exception("OTP is wrong");
+            }
+            throw new Exception("Phone No is not Registered");
+        }
 
-        //public async Task<ApplicationUser?> GetUserByPhoneNo(TokenOtpGenerateRequest request, CancellationToken cancellationToken)
-        //{
-        //    var getAllUser = await _unitOfWorkDA.UserDA.GetUsers(cancellationToken);
-        //    var getNullMobileDevice = getAllUser.FirstOrDefault(p => p.PhoneNumber == request.PhoneNo);
-        //    if (getNullMobileDevice == null)
-        //        throw new Exception("User Not Found");
-        //    if (getNullMobileDevice.MobileDeviceId == null || getNullMobileDevice.MobileDeviceId != request.MobileDeviceId)
-        //    {
-        //        getNullMobileDevice.MobileDeviceId = request.MobileDeviceId;
-        //        await _unitOfWorkDA.UserDA.UpdateUser(getNullMobileDevice);
-        //    }
-        //    return _userManager.Users.FirstOrDefault(p => p.PhoneNumber == request.PhoneNo && p.MobileDeviceId == request.MobileDeviceId);
-        //}
+        public async Task<ApplicationUser?> GetUserByPhoneNo(TokenOtpGenerateRequest request, CancellationToken cancellationToken)
+        {
+            var getAllUser = await _unitOfWorkDA.UserDA.GetUsers(cancellationToken);
+            var getNullMobileDevice = getAllUser.FirstOrDefault(p => p.PhoneNumber == request.PhoneNo);
+            if (getNullMobileDevice == null)
+            throw new Exception("User Not Found");
+            if (getNullMobileDevice.MobileDeviceId == null || getNullMobileDevice.MobileDeviceId != request.MobileDeviceId)
+            {
+                getNullMobileDevice.MobileDeviceId = request.MobileDeviceId;
+                //  await _unitOfWorkDA.UserDA.UpdateUser(getNullMobileDevice);
+            }
+            return _userManager.Users.FirstOrDefault(p => p.PhoneNumber == request.PhoneNo && p.MobileDeviceId == request.MobileDeviceId);
+        }
 
         public Task<TokenResponse> RefreshToken(string refreshToken, string ipAddress, CancellationToken cancellationToken)
         {
@@ -165,7 +169,7 @@ namespace Architecture.Infrastructure.Services.Token
             //await _httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
-        /// <inheritdoc cref="ITokenService.GetUserByEmail(string)" />
+        ///<inheritdoc cref = "ITokenService.GetUserByEmail(string)" />
         public async Task<ApplicationUser> GetUserByEmail(string email, CancellationToken cancellationToken)
         {
             return await _userManager.FindByEmailAsync(email);
@@ -186,6 +190,120 @@ namespace Architecture.Infrastructure.Services.Token
                 user = await GetUserByName(searchText, cancellationToken);
             }
             return user;
+        }
+
+        public async Task GenerateOTPForMFG(TokenOtpGenerateRequest request, CancellationToken cancellationToken)
+        {
+            string data = string.Empty;
+            var user = await GetUserByPhoneNo(request, cancellationToken);
+            if (user != null)
+            {
+                var userRoles = _unitOfWorkDA.UserDA.GetAspNetUserRoles(cancellationToken);
+                var getAllRole = await _unitOfWorkDA.RoleDA.GetAllRoles(cancellationToken);
+                var selectedRole = getAllRole.Where(r => r.NormalizedName.ToLower().Contains("contractor") || r.NormalizedName.ToLower().Contains("supervisor") || r.NormalizedName.ToLower().Contains("storemanager"));
+                var checkUserRole = (from ur in userRoles.Result.ToList()
+                                     join r in selectedRole on ur.RoleId equals r.Id
+                                     where ur.UserId == user.Id
+                                     select r).ToList();
+                if (checkUserRole == null || checkUserRole.Count == 0)
+                {
+                    throw new SystemInternalException("Not a valid MFG User");
+                }
+
+                if (user.PhoneNumber == "8555081433" || user.PhoneNumber == "8555081434")
+                {
+                    string randomOTP = "0000";
+                    //var userTenantMapping = await _unitOfWorkDA.UserTenantMappingDA.GetAll(cancellationToken);
+                    //var userTenantDetail = userTenantMapping.FirstOrDefault(x => x.UserId == user.UserId);
+                    //if (userTenantDetail == null)
+                    //{
+                    //throw new SystemInternalException("User not linked to Tenant");
+                    //}
+
+                    var otpLogin = await _loginDA.GetAll(cancellationToken);
+                    var oldLoginTokenByPhoneNo = otpLogin.FirstOrDefault(p => p.PhoneNumber == request.PhoneNo);
+
+                    if (oldLoginTokenByPhoneNo == null)
+                    {
+                        OTPLogin loginToken = new OTPLogin()
+                        {
+                            PhoneNumber = request.PhoneNo,
+                            OTP = randomOTP,
+                            ExpiryTime = DateTime.UtcNow.AddMinutes(10),
+                        };
+                        var createdToken = await _loginDA.CreateLoginToken(loginToken, cancellationToken);
+                        data = createdToken.OTP;
+                    }
+                    else
+                    {
+                        oldLoginTokenByPhoneNo.OTP = randomOTP;
+                        oldLoginTokenByPhoneNo.ExpiryTime = DateTime.UtcNow.AddMinutes(10);
+                        var createdToken = await _loginDA.UpdateLoginToken(oldLoginTokenByPhoneNo, cancellationToken);
+                        data = createdToken.OTP;
+                    }
+                }
+                else if (user.MobileDeviceId == request.MobileDeviceId)
+                {
+                    string randomOTP = "0000";
+                    //var userTenantMapping = await _unitOfWorkDA.UserTenantMappingDA.GetAll(cancellationToken);
+                    //var userTenantDetail = userTenantMapping.FirstOrDefault(x => x.UserId == user.UserId) ?? throw new SystemInternalException("User not linked to Tenant");
+                    // var tenantDetail = await _unitOfWorkDA.TenantDA.GetById(userTenantDetail.TenantId, cancellationToken);
+                    /* if (tenantDetail != null && tenantDetail.SendOTP == true)
+                     {
+                         randomOTP = new Random().Next(1, 9999).ToString("D4");
+                     }*/
+
+                    var otpLogin = await _loginDA.GetAll(cancellationToken);
+                    var oldLoginTokenByPhoneNo = otpLogin.FirstOrDefault(p => p.PhoneNumber == request.PhoneNo);
+
+                    if (oldLoginTokenByPhoneNo == null)
+                    {
+                        OTPLogin loginToken = new OTPLogin()
+                        {
+                            PhoneNumber = request.PhoneNo,
+                            OTP = randomOTP,
+                            ExpiryTime = DateTime.UtcNow.AddMinutes(10),
+                        };
+                        var createdToken = await _loginDA.CreateLoginToken(loginToken, cancellationToken);
+                        data = createdToken.OTP;
+                    }
+                    else
+                    {
+                        oldLoginTokenByPhoneNo.OTP = randomOTP;
+                        oldLoginTokenByPhoneNo.ExpiryTime = DateTime.UtcNow.AddMinutes(10);
+                        var createdToken = await _loginDA.UpdateLoginToken(oldLoginTokenByPhoneNo, cancellationToken);
+                        data = createdToken.OTP;
+                    }
+
+                    //Send OTP to Someone through SMS
+                    //if (tenantDetail != null && tenantDetail.SendOTP == true)
+                    //{
+                    string msgText = "OTP for mobile number verification is " + data + " - " + ".\r\nOTP is valid for 10 minutes CODTAN.";
+                    //CustomersSendNotificationDto dto = new()
+                    //{
+                    //    CustomerMobileNo = request.PhoneNo,
+                    //    Message = msgText,
+                    //};
+                    //var notification = await CreateNotification(dto, NotificationTypeEnum.SendOTP.ToString(), NotificationMethodEnum.SMS.ToString(), cancellationToken);
+
+                    //send OTP method
+                    //string SMSResult = await _sendSMSBL.SendSMS(msgText, dto.CustomerMobileNo, NotificationTypeEnum.SendOTP.ToString(), cancellationToken);
+                    //if (SMSResult.ToLower().Contains("ok"))
+                    //    notification.Status = (int)NotificationManagementEnum.Completed;
+                    //else
+                    //    notification.Status = (int)NotificationManagementEnum.Failed;
+                    //await UpdateNotification(notification, cancellationToken);
+                    //}
+                }
+                else
+                {
+                    throw new SystemInternalException("User device not found");
+                }
+            }
+            else
+            {
+                throw new SystemInternalException("User not found");
+            }
         }
 
         public TokenResponse GetTokenDetails(ClaimsPrincipal claimsPrincipal, CancellationToken cancellationToken)
@@ -291,7 +409,7 @@ namespace Architecture.Infrastructure.Services.Token
             string role = (await _userManager.GetRolesAsync(user))[0];
             string jwtToken = await GenerateJwtToken(user, cancellationToken, isCookie);
 
-           // var userTenants = await _unitOfWorkDA.UserTenantMappingDA.GetAll(cancellationToken);
+            // var userTenants = await _unitOfWorkDA.UserTenantMappingDA.GetAll(cancellationToken);
             var tenant = string.Empty;
             string tenantId = string.Empty;
             if (tenant != null) tenantId = MagnusMinds.Utility.Encryption.Encrypt(Convert.ToString(0), true, ApplicationIdentityConstants.EncryptionSecret);
@@ -303,6 +421,24 @@ namespace Architecture.Infrastructure.Services.Token
                                      //""//refreshToken.Token
                                      );
         }
+
+
+        //public async Task<bool> ValidateUserAsync(UserLoginDto loginDto)
+        //{
+        //   _userManager = await _userManager.FindByNameAsync(loginDto.UserName);
+
+        //    var result = _userManager != null && await _userManager.CheckPasswordAsync(data, loginDto.Password);
+        //    return result;
+        //}
+
+        //[AllowAnonymous]
+        //[HttpPost("authenticate")]
+        //public IActionResult Authenticate(UserLoginDto model)
+        //{
+        //    var response = _userService.Authenticate(model);
+        //    return Ok(response);
+        //}
+
 
 
     }

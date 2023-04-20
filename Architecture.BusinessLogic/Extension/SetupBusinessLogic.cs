@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Architecture.BusinessLogic.Interface;
+using Architecture.BusinessLogic.Repositories;
+using Architecture.BusinessLogic.UnitOfWork;
+using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Architecture.BusinessLogic.Extension
 {
@@ -11,12 +11,19 @@ namespace Architecture.BusinessLogic.Extension
     {
         public static void SetupUnitOfWorkBL(this IServiceCollection services)
         {
+            services.AddTransient<IUsersBL, UsersBL>();
+            services.AddTransient<IRoleBL, RoleBL>();
+            services.AddTransient<IRolePermissionBL, RolePermissionBL>();
+            services.AddTransient<IEmailSenderBL, EmailSenderBL>();
 
+
+            //KEEP THIS LINE AT THE BOTTOM
+            services.AddScoped<IUnitOfWorkBL, UnitOfWorkBL>();
         }
 
         public static void SetupAutoMapper(this IServiceCollection services)
         {
-            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
     }
 }

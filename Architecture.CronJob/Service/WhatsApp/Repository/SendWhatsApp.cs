@@ -3,12 +3,7 @@ using Architecture.Dto;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace Architecture.CronJob.Service.WhatsApp.Repository

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 
-
 namespace Architecture.Core.Localizer.JsonString
 {
     public static class JsonStringServiceHandler

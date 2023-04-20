@@ -1,7 +1,8 @@
 ﻿using Architecture.DataAccess.Generic;
 using Architecture.DataAccess.Interface;
 using Architecture.Dto;
-using Architecture.Entities;
+using Architecture.Entities.Model;
+using MagnusMinds.Utility;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -26,8 +27,14 @@ namespace Architecture.DataAccess.Repositories
 
         public async Task<IQueryable<ApplicationRole>> GetRoles(CancellationToken cancellationToken)
         {
-            return await _roles.GetAsync(cancellationToken, x => x.Id == _currentUser.TenantId);
+            return await _roles.GetAsync(cancellationToken, x => x.TenantId == _currentUser.TenantId && x.IsDeleted == false);
         }
+
+        public async Task<IQueryable<ApplicationRole>> GetAllRoles(CancellationToken cancellationToken)
+        {
+            return await _roles.GetAsync(cancellationToken, x => x.IsDeleted == false);
+        }
+
 
         public async Task<IdentityResult> CreateRole(ApplicationRole model)
         {

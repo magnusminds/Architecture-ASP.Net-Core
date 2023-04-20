@@ -22,7 +22,7 @@ namespace Architecture.DataBase.DatabaseFirst.Models
         public long UserId { get; set; }
         public long RoleId { get; set; }
 
-        public virtual Role Role { get; set; }
+        //public virtual Role Role { get; set; }
         public virtual Users User { get; set; }
         public virtual ICollection<UserRoleModuleAction> UserRoleModuleAction { get; set; }
     }
