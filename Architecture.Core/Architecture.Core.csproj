@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Localizer\JsonString\JsonString_Resources\" />
+    <Folder Include="Services\DateTimeParsing\" />
   </ItemGroup>
 
 </Project>

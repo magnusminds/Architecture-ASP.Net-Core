@@ -43,12 +43,12 @@ namespace Architechture.Web.Middleware
                         if (user.IsActive == true && user.IsDeleted == false)
                         {
                             var userRoleNames = await _userManager.GetRolesAsync(user);
-                            //var userRoles = _roleManager.Roles.Where(x => userRoleNames.Contains(x.Name)).FirstOrDefault();
-                            _currentUser.UserId = user.UserId;
+                            var userRoles = _roleManager.Roles.Where(x => userRoleNames.Contains(x.Name)).FirstOrDefault();
+                            _currentUser.UserId = Convert.ToString(user.UserId);
                             _currentUser.Name = user.FirstName;
                             _currentUser.FullName = user.FullName;
                             _currentUser.EmailAddress = user.Email;
-                            _currentUser.RoleId = 0;
+                            _currentUser.RoleId = userRoles.Id ;
                             _currentUser.Role = string.Empty;
                             if (context.HttpContext.Request.Cookies[ApplicationIdentityConstants.TenantCookieName] != null)
                             {

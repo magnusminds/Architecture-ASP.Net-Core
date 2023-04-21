@@ -4,7 +4,8 @@ using System.Net;
 using System.Text.Json;
 using UAParser;
 using Architecture.Infrastructure.Identity.Models;
-using Architecture.Infrastructure.Services.Email;
+
+using Architecture.Core.Services.Email;
 
 namespace Architecture.WebAPI.Middleware
 {

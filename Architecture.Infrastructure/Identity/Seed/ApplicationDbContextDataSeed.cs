@@ -17,7 +17,6 @@ namespace Architecture.Infrastructure.Identity.Seed
         {
             // Add roles supported
             await roleManager.CreateAsync(new ApplicationRole(ApplicationIdentityConstants.Roles.Admin));
-            await roleManager.CreateAsync(new ApplicationRole(ApplicationIdentityConstants.Roles.Basic));
             await roleManager.CreateAsync(new ApplicationRole(ApplicationIdentityConstants.Roles.SuperAdmin));
           
 

@@ -3,7 +3,7 @@ using Architecture.Core.Constants;
 using Architecture.Core.Localizer.JsonString;
 using Architecture.Dto;
 using Architecture.Dto.APIResponse;
-using Architecture.Dto.UserLogin;
+
 using Architecture.Infrastructure.Identity.Models;
 using Architecture.Infrastructure.Services.Token;
 using AutoWrapper.Wrappers;
@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Localization;
-using System.Threading;
 
 namespace Architecture.WebAPI.Controllers
 {
@@ -38,7 +37,7 @@ namespace Architecture.WebAPI.Controllers
 
 
         [HttpGet("GetPermissions")]
-       // [Authorize]
+        [Authorize]
         public async Task<ApiResponse> GetPermissionsAPI(CancellationToken cancellationToken)
         {
             var cacheString = "ARCPermissionDetails" + _currentUser.UserId + _currentUser.TenantId;
@@ -62,7 +61,7 @@ namespace Architecture.WebAPI.Controllers
         }
 
         [HttpPost("AuthenticateAPI")]
-        public async Task<ArchitectureAPIResponse> AuthenticateAPI(TokenAPIRequest request, CancellationToken cancellationToken)
+        public async Task<APIResponse> AuthenticateAPI(TokenAPIRequest request, CancellationToken cancellationToken)
         {
             TokenResponse response = await _tokenService.AuthenticateAPI(request, cancellationToken);
             if (response != null)
@@ -71,25 +70,25 @@ namespace Architecture.WebAPI.Controllers
                 if (_memoryCache.Get(cacheString) != null)
                     _memoryCache.Remove(cacheString);
 
-                return new ArchitectureAPIResponse(messageCode: JsonStringResourcesKeys.TokenGeneratedSuccessfully, message: _localizer[JsonStringResourcesKeys.TokenGeneratedSuccessfully], result: response, statusCode: 200);
+                return new APIResponse(messageCode: JsonStringResourcesKeys.TokenGeneratedSuccessfully, message: _localizer[JsonStringResourcesKeys.TokenGeneratedSuccessfully], result: response, statusCode: 200);
             }
             else
             {
-                return new ArchitectureAPIResponse(messageCode: JsonStringResourcesKeys.OTPInvalid, message: _localizer[JsonStringResourcesKeys.OTPInvalid], result: null, statusCode: 404);
+                return new APIResponse(messageCode: JsonStringResourcesKeys.OTPInvalid, message: _localizer[JsonStringResourcesKeys.OTPInvalid], result: null, statusCode: 404);
             }
         }
 
 
         [HttpPost("GenerateOTPForAPI")]
-        public async Task<ArchitectureAPIResponse> GenerateOTPForAPI(TokenOtpGenerateRequest request, CancellationToken cancellationToken)
+        public async Task<APIResponse> GenerateOTPForAPI(TokenOtpGenerateRequest request, CancellationToken cancellationToken)
         {
             await _tokenService.GenerateOTP(request, cancellationToken);
-            return new ArchitectureAPIResponse(messageCode: JsonStringResourcesKeys.GenerateOTPSuccessfully, message: _localizer[JsonStringResourcesKeys.GenerateOTPSuccessfully], result: string.Empty, statusCode: 200);
+            return new APIResponse(messageCode: JsonStringResourcesKeys.GenerateOTPSuccessfully, message: _localizer[JsonStringResourcesKeys.GenerateOTPSuccessfully], result: string.Empty, statusCode: 200);
         }
 
 
         [HttpPost("Logout")]
-        //[Authorize]
+        [Authorize]
         public async Task<ApiResponse> Logout(CancellationToken cancellationToken)
         {
             var cacheString = "ARCPermissionDetails" + _currentUser.UserId + _currentUser.TenantId;
@@ -102,11 +101,27 @@ namespace Architecture.WebAPI.Controllers
 
         [HttpPost("login")]
    
-        public async Task<ApiResponse> Authenticate([FromBody] UserLoginDto user, CancellationToken cancellationToken)
+        public async Task<APIResponse> Authenticate(TokenRequest request, CancellationToken cancellationToken)
         {
-            await _tokenService.IsValidUser(user.UserName,user.Password, cancellationToken);
-            return new ApiResponse(message: "Login successful.!", result: null, statusCode: 200);
+            string remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+
+            TokenResponse response =  await _tokenService.Authenticate(request, remoteIpAddress, cancellationToken);
+            if (response != null)
+            {
+                var cacheString = "ARCAuthDetails" + response.Id + response.TenantId;
+                if (_memoryCache.Get(cacheString) != null)
+                    _memoryCache.Remove(cacheString);
+
+                return new APIResponse(messageCode: JsonStringResourcesKeys.TokenGeneratedSuccessfully, message: _localizer[JsonStringResourcesKeys.TokenGeneratedSuccessfully], result: response, statusCode: 200);
+            }
+            else
+            {
+                return new APIResponse(messageCode: JsonStringResourcesKeys.OTPInvalid, message: _localizer[JsonStringResourcesKeys.OTPInvalid], result: null, statusCode: 404);
+            }
+
         }
+
+       
 
 
 

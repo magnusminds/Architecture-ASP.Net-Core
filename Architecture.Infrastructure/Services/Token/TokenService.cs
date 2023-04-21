@@ -51,7 +51,9 @@ namespace Architecture.Infrastructure.Services.Token
         // <inheritdoc cref = "ITokenService.Authenticate(TokenRequest, string)" />
         public async Task<TokenResponse> Authenticate(TokenRequest request, string ipAddress, CancellationToken cancellationToken, bool isCookie = false)
         {
-            if (await IsValidUser(request.Username, request.Password, cancellationToken))
+            bool isValid = true;
+            isValid = await IsValidUser(request.Username, request.Password, cancellationToken);
+            if (isValid == false)
             {
                 ApplicationUser user = await GetUser(request.Username, cancellationToken);
 
@@ -128,12 +130,34 @@ namespace Architecture.Infrastructure.Services.Token
             throw new Exception("Phone No is not Registered");
         }
 
+        //public async Task<TokenResponse> LoginAPI(TokenAPIRequest request, CancellationToken cancellationToken)
+        //{
+
+        //    var getAllUser = await _unitOfWorkDA.UserDA.GetUsers(cancellationToken);
+        //    var oldLoginTokenByPhoneNo = getAllUser.FirstOrDefault(p => p.UserName == request.UserName);
+
+        //    if (oldLoginTokenByPhoneNo != null)
+        //    {
+
+        //        TokenOtpGenerateRequest tokenOtpGenerate = new TokenOtpGenerateRequest();
+        //        tokenOtpGenerate.UserName = request.UserName;
+        //        tokenOtpGenerate.Password = request.Password;
+
+        //        await _signInManager.SignInAsync(oldLoginTokenByPhoneNo, isPersistent: false);
+
+        //        return await GenerateAuthentication(false, oldLoginTokenByPhoneNo, cancellationToken);
+
+        //    }
+        //    throw new Exception("Phone No is not Registered");
+
+        //}
+
         public async Task<ApplicationUser?> GetUserByPhoneNo(TokenOtpGenerateRequest request, CancellationToken cancellationToken)
         {
             var getAllUser = await _unitOfWorkDA.UserDA.GetUsers(cancellationToken);
             var getNullMobileDevice = getAllUser.FirstOrDefault(p => p.PhoneNumber == request.PhoneNo);
             if (getNullMobileDevice == null)
-            throw new Exception("User Not Found");
+                throw new Exception("User Not Found");
             if (getNullMobileDevice.MobileDeviceId == null || getNullMobileDevice.MobileDeviceId != request.MobileDeviceId)
             {
                 getNullMobileDevice.MobileDeviceId = request.MobileDeviceId;
@@ -158,7 +182,7 @@ namespace Architecture.Infrastructure.Services.Token
                 return false;
             }
 
-            SignInResult signInResult = await _signInManager.PasswordSignInAsync(user, password, true, false);
+            SignInResult signInResult = await _signInManager.PasswordSignInAsync(user, user.PasswordHash, true, false);
 
             return signInResult.Succeeded;
         }
@@ -191,6 +215,8 @@ namespace Architecture.Infrastructure.Services.Token
             }
             return user;
         }
+
+      
 
         public async Task GenerateOTPForMFG(TokenOtpGenerateRequest request, CancellationToken cancellationToken)
         {

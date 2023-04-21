@@ -1,26 +1,30 @@
-﻿using Architecture.DataAccess.Interface;
+﻿using Architecture.DataAccess.Generic;
+using Architecture.DataAccess.Interface;
+using Architecture.Dto.Paging;
+using Architecture.Entities.Model;
+
 namespace Architecture.DataAccess.Repositories
 {
     public class UserRolesDA : IUserRolesDA
     {
-        //private readonly ISqlRepository<UserRole> _usersRole;
-        //public UserRolesDA(ISqlRepository<UserRole> usersRole)
+        //private readonly ISqlRepository<ApplicationRole> _usersRole;
+        //public UserRolesDA(ISqlRepository<ApplicationRole> usersRole)
         //{
         //    _usersRole = usersRole;
 
         //}
 
-        //public IEnumerable<UserRole> GetUserRoles()
+        //public IEnumerable<ApplicationRole> GetUserRoles()
         //{
         //    return _usersRole.Table.AsEnumerable();
         //}
 
-        //public IPagedList<UserRole> GetUsersPaging(int pageIndex = 0, int pageSize = int.MaxValue)
+        //public IPagedList<ApplicationRole> GetUsersPaging(int pageIndex = 0, int pageSize = int.MaxValue)
         //{
-        //    return new PagedList<UserRole>(_usersRole.Table, pageIndex, pageSize);
+        //    return new PagedList<ApplicationRole>(_usersRole.Table, pageIndex, pageSize);
         //}
 
-        //public UserRole GetUserRoleById(long userId)
+        //public ApplicationRole GetUserRoleById(long userId)
         //{
         //    if (userId == 0)
         //    {
@@ -29,12 +33,12 @@ namespace Architecture.DataAccess.Repositories
         //    return _usersRole.GetById(userId);
         //}
 
-        //public async Task<IdentityResult> CreateRole(ApplicationRole model)
+        //public async Task<ApplicationRole> AddUserRole(ApplicationRole model)
         //{
-        //    return await _usersRole.CreateAsync(model);
+        //    return await _usersRole.(model);
         //}
 
-        //public async Task<IdentityResult> UpdateRole(ApplicationRole model)
+        //public async Task<ApplicationRole> UpdateUserRole(ApplicationRole model)
         //{
         //    return await _usersRole.UpdateAsync(model);
         //}

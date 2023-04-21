@@ -6,6 +6,7 @@ namespace Architecture.BusinessLogic.UnitOfWork
     public interface IUnitOfWorkBL
     {
    
+        IRoleBL RoleBL { get; }
 
         IUsersBL UserBL { get; }
 

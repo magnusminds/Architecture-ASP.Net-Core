@@ -1,5 +1,4 @@
 ﻿using Architecture.Core.Constants;
-
 using Architecture.Entities;
 using Architecture.Entities.Model;
 using Microsoft.AspNetCore.Identity;

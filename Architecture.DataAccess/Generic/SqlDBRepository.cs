@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Architecture.Entities;
+﻿using Architecture.Entities;
 using MagnusMinds.Utility;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 
 namespace Architecture.DataAccess.Generic

@@ -1,6 +1,4 @@
-﻿
-
-namespace Architecture.Core.Constants
+﻿namespace Architecture.Core.Constants
 {
     public enum AspNetRolesEnum
     {

@@ -1,11 +1,11 @@
-﻿using Architecture.Dto.User;
+﻿using Architecture.Dto.DataTable;
+using Architecture.Dto.User;
+using Architecture.Entities.Model;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Threading;
-using Architecture.Dto.DataTable;
-using Architecture.Entities.Model;
+using System.Threading.Tasks;
 
 namespace Architecture.BusinessLogic.Interface
 {

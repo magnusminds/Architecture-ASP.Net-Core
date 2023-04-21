@@ -1,7 +1,6 @@
-﻿
-using System;
-using Architecture.BusinessLogic.Interface;
+﻿using Architecture.BusinessLogic.Interface;
 using Architecture.Entities;
+using System;
 
 namespace Architecture.BusinessLogic.UnitOfWork
 {
@@ -9,18 +8,21 @@ namespace Architecture.BusinessLogic.UnitOfWork
     {
         private readonly ApplicationDbContext _context;
 
-    
-
         public IUsersBL UserBL { get; }
 
         public IEmailSenderBL EmailSenderBL { get; }
 
         public IRolePermissionBL RolePermissionBL { get; }
 
-        public UnitOfWorkBL(ApplicationDbContext context, IUsersBL UserBL)
+        public IRoleBL RoleBL { get; }
+
+        public UnitOfWorkBL(ApplicationDbContext context, IUsersBL UserBL, IRolePermissionBL RolePermissionBL, IRoleBL RoleBL, IEmailSenderBL EmailSenderBL)
         {
             this._context = context;
             this.UserBL = UserBL;
+            this.RoleBL = RoleBL;
+            this.RolePermissionBL = RolePermissionBL;
+            this.EmailSenderBL = EmailSenderBL;
         }
 
         #region DisposeMethod

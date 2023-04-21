@@ -4,7 +4,6 @@ using Architecture.Dto.User;
 using AutoWrapper.Extensions;
 using AutoWrapper.Wrappers;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.Intrinsics.X86;
 
 namespace Architecture.WebAPI.Controllers
 {
@@ -16,8 +15,9 @@ namespace Architecture.WebAPI.Controllers
         private readonly CurrentUser _currentUser;
         private readonly IUnitOfWorkBL _unitOfWorkBL;
 
-        public UserController(ILogger<UserController> logger)
+        public UserController(IUnitOfWorkBL unitOfWorkBL, ILogger<UserController> logger)
         {
+            _unitOfWorkBL = unitOfWorkBL;
             _logger = logger;
         }
 
@@ -69,9 +69,36 @@ namespace Architecture.WebAPI.Controllers
             return new ApiResponse(message: "Data Update successful", result: null, statusCode: 200);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userApiRequest"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPut("ChangePassword")]
+        public async Task<ApiResponse> UpdateChangePwd([FromBody] ChangePasswordRequestDto changePwdRequest, CancellationToken cancellationToken)
+        {
+            ValidationRequest(changePwdRequest);
+            var data = await _unitOfWorkBL.UserBL.ChangePassword(changePwdRequest, cancellationToken);
+            if (data == null)
+            {
+                return new ApiResponse(message: "Internal server error", result: null, statusCode: 500);
+            }
+            return new ApiResponse(message: "Data updated successful", result: null, statusCode: 200);
+        }
+
         #region Private Methods
 
         private void ValidationRequest(UserRequestDto orderRequestDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new ApiException(ModelState.AllErrors());
+            }
+        }
+
+
+        private void ValidationRequest(ChangePasswordRequestDto orderRequestDto)
         {
             if (!ModelState.IsValid)
             {

@@ -4,11 +4,9 @@ using Architecture.Dto.APIResponse;
 using Architecture.Dto.RolePermission;
 using Architecture.Entities.Model;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -52,9 +50,9 @@ namespace Architecture.BusinessLogic.Repositories
                     RolePermissionResponseDto.Add(moduleResponseDtoChild);
                 }
                 PermissiongResponseDto permissionResponseDto = new PermissiongResponseDto();
-                permissionResponseDto.Id = item.Split(".")[2] + item.Split(".")[3];
+                permissionResponseDto.Id = item.Split(".")[1] + item.Split(".")[2];
                 permissionResponseDto.Module = item.Split(".")[2];
-                permissionResponseDto.PermissionType = item.Split(".")[3];
+                permissionResponseDto.PermissionType = item.Split(".")[2];
                 permissionResponseDto.Permission = item;
                 if (allClaimsByRole.Any(x => x.Value == item))
                     permissionResponseDto.IsChecked = "checked";

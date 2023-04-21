@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Architecture.Core.Constants
+﻿namespace Architecture.Core.Constants
 {
     public class CustomClaimTypes
     {
-        public const string Permission = "permission";
+        public const string Permission = "Permission";
         public const string UserPermission = "User";
         public const string RolePermission = "Role";
+        public const string CustomerPermission = "Customer";
     }
 }

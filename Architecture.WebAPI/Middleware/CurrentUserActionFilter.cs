@@ -11,12 +11,15 @@ namespace Architecture.WebAPI.Middleware
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly CurrentUser _currentUser;
+        private readonly IConfiguration _configuration;
 
-        public CurrentUserActionFilter(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, CurrentUser currentUser)
+
+        public CurrentUserActionFilter(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, CurrentUser currentUser, IConfiguration configuration)
         {
             _currentUser = currentUser;
             _userManager = userManager;
             _roleManager = roleManager;
+            _configuration = configuration;
 
         }
 
@@ -36,24 +39,25 @@ namespace Architecture.WebAPI.Middleware
                     if (user != null)
                     {
                         var userRoleNames = await _userManager.GetRolesAsync(user);
+                        var path = _configuration["AppSettings:HostURL"];
                         var userRoles = _roleManager.Roles.Where(x => userRoleNames.Contains(x.Name)).FirstOrDefault();
-                        _currentUser.UserId = Convert.ToInt32(user.Id);
+                        _currentUser.UserId = user.Id;
                         _currentUser.Name = user.FirstName;
                         _currentUser.FullName = user.FullName;
                         _currentUser.EmailAddress = user.Email;
-                        _currentUser.RoleId = 0;
+                        _currentUser.RoleId = userRoles.Id;
                         _currentUser.Role = string.Empty;
 
-                        //if (context.HttpContext.Request.Cookies[ApplicationIdentityConstants.TenantCookieName] != null)
-                        //{
-                        //    _currentUser.TenantId = Convert.ToInt32(MagnusMinds.Utility.Encryption.Decrypt(context.HttpContext.Request.Cookies[ApplicationIdentityConstants.TenantCookieName], true, ApplicationIdentityConstants.EncryptionSecret));
-                        //    var userTenantData = await _unitOfWorkBL.UserTenantMappingBL.GetAll(new CancellationToken());
-                        //    if (userTenantData != null)
-                        //    {
-                        //        _currentUser.TenantName = userTenantData?.FirstOrDefault(x => x.TenantId == _currentUser.TenantId)?.TenantName;
-                        //        _currentUser.IsMultipleTenant = userTenantData.Count() == 1 ? false : true;
-                        //    }
-                        //}
+                        if (context.HttpContext.Request.Cookies[ApplicationIdentityConstants.TenantCookieName] != null)
+                        {
+                            _currentUser.TenantId = Convert.ToInt32(MagnusMinds.Utility.Encryption.Decrypt(context.HttpContext.Request.Cookies[ApplicationIdentityConstants.TenantCookieName], true, ApplicationIdentityConstants.EncryptionSecret));
+                            //var userTenantData = await _unitOfWorkBL.UserTenantMappingBL.GetAll(new CancellationToken());
+                            //if (userTenantData != null)
+                            //{
+                            //    _currentUser.TenantName = userTenantData?.FirstOrDefault(x => x.TenantId == _currentUser.TenantId)?.TenantName;
+                            //    _currentUser.IsMultipleTenant = userTenantData.Count() == 1 ? false : true;
+                            //}
+                        }
 
                         if (!string.IsNullOrEmpty(context.HttpContext.Request.Headers[ApplicationIdentityConstants.TenantHeaderName]))
                         {

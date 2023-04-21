@@ -3,7 +3,7 @@
 
 namespace Architecture.Dto.APIResponse
 {
-    public class ArchitectureAPIResponse
+    public class APIResponse
     {
         public string Version
         {
@@ -50,7 +50,7 @@ namespace Architecture.Dto.APIResponse
         }
 
         [JsonConstructor]
-        public ArchitectureAPIResponse(string message, string messageCode, object result = null, int statusCode = 200, string apiVersion = "1.0.0.0")
+        public APIResponse(string message, string messageCode, object result = null, int statusCode = 200, string apiVersion = "1.0.0.0")
         {
             StatusCode = statusCode;
             Message = message;
@@ -59,20 +59,20 @@ namespace Architecture.Dto.APIResponse
             Version = apiVersion;
         }
 
-        public ArchitectureAPIResponse(object result, int statusCode = 200)
+        public APIResponse(object result, int statusCode = 200)
         {
             StatusCode = statusCode;
             Result = result;
         }
 
-        public ArchitectureAPIResponse(int statusCode, object apiError)
+        public APIResponse(int statusCode, object apiError)
         {
             StatusCode = statusCode;
             ResponseException = apiError;
             IsError = true;
         }
 
-        public ArchitectureAPIResponse()
+        public APIResponse()
         {
         }
     }

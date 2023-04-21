@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Architecture.Core.Constants;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Architecture.Core.Constants;
+
 
 namespace Architecture.WebAPI.Middleware
 {

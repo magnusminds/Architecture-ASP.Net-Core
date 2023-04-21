@@ -1,10 +1,10 @@
 ﻿using Architecture.BusinessLogic.Extension;
 using Architecture.Core.Localizer.JsonString;
+using Architecture.Core.Services.Email;
 using Architecture.DataAccess.Extention;
 using Architecture.Dto;
 using Architecture.Infrastructure.Identity.Authorize;
 using Architecture.Infrastructure.Identity.Models;
-using Architecture.Infrastructure.Services.Email;
 using Architecture.Infrastructure.Services.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

@@ -1,10 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Architecture.Infrastructure.Identity.Models
 {
@@ -23,5 +18,7 @@ namespace Architecture.Infrastructure.Identity.Models
         [Required]
         [JsonProperty("MobileDeviceId")]
         public string MobileDeviceId { get; set; }
+
+
     }
 }

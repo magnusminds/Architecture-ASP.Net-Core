@@ -79,7 +79,7 @@ namespace Architecture.BusinessLogic.Repositories
                                        PhoneNumber = x.PhoneNumber,
                                        UserId = x.UserId,
                                        IsActive = x.IsActive,
-                                   }).Where(x => !(x.UserRole == AspNetRolesEnum.Contractor.ToString() || x.UserRole == AspNetRolesEnum.StoreManager.ToString() || x.UserRole == AspNetRolesEnum.Supervisor.ToString()));
+                                   }).Where(x => !(x.UserRole ==AspNetRolesEnum.Contractor.ToString() || x.UserRole == AspNetRolesEnum.StoreManager.ToString() || x.UserRole == AspNetRolesEnum.Supervisor.ToString()));
 
             var userFilteredData = FilterUserData(dataTableFilterDto, userResponseDto);
             var userData = new PagedList<UserResponseDto>(userFilteredData, dataTableFilterDto);
@@ -230,7 +230,7 @@ namespace Architecture.BusinessLogic.Repositories
         public async Task<bool> ValidateOldPassword(string OldPassword, CancellationToken cancellationToken)
         {
             var userAllData = await GetAllUsersData(cancellationToken);
-            var oldApplicationUserData = userAllData.Where(p => p.UserId == _currentUser.UserId).FirstOrDefault();
+            var oldApplicationUserData = userAllData.Where(p => p.Id == _currentUser.UserId).FirstOrDefault();
             var isPasswordValidate = await _userManager.CheckPasswordAsync(_mapper.Map<ApplicationUser>(oldApplicationUserData), OldPassword);
             return isPasswordValidate;
         }
@@ -239,7 +239,7 @@ namespace Architecture.BusinessLogic.Repositories
         {
             // Update AspNetUser
             var userAllData = await GetAllUsersData(cancellationToken);
-            var oldApplicationUserData = userAllData.Where(p => p.UserId == _currentUser.UserId).FirstOrDefault();
+            var oldApplicationUserData = userAllData.Where(p => p.Id == _currentUser.UserId).FirstOrDefault();
             var updateUser = await _userManager.ChangePasswordAsync(_mapper.Map<ApplicationUser>(oldApplicationUserData), model.OldPassword, model.ConfirmPassword);
             return _mapper.Map<UserRequestDto>(oldApplicationUserData);
         }
