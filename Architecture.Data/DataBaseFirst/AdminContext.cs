@@ -1,4 +1,5 @@
 ﻿using Architecture.DataBase.DatabaseFirst.Models;
+using Architecture.DataBase.DataBaseFirst.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Architecture.DataBase.DatabaseFirst
@@ -18,9 +19,11 @@ namespace Architecture.DataBase.DatabaseFirst
 
         public virtual DbSet<Models.Action> Action { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+
+        public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Module> Module { get; set; }
         public virtual DbSet<ModuleAction> ModuleAction { get; set; }
-        public virtual DbSet<Role> Role { get; set; }
+   
         public virtual DbSet<RoleModuleAction> RoleModuleAction { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<UserRoleModuleAction> UserRoleModuleAction { get; set; }
@@ -36,12 +39,12 @@ namespace Architecture.DataBase.DatabaseFirst
                 entity.Property(e => e.UpdatedUtcdate).HasColumnName("UpdatedUTCDate");
             });
 
-            modelBuilder.Entity<Users>(entity =>
-            {
-                entity.Property(e => e.CreatedUtcdate).HasColumnName("CreatedUTCDate");
+            //modelBuilder.Entity<Users>(entity =>
+            //{
+            //    entity.Property(e => e.CreatedUtcdate).HasColumnName("CreatedUTCDate");
 
-                entity.Property(e => e.UpdatedUtcdate).HasColumnName("UpdatedUTCDate");
-            });
+            //    entity.Property(e => e.UpdatedUtcdate).HasColumnName("UpdatedUTCDate");
+            //});
 
             modelBuilder.Entity<Module>(entity =>
             {
@@ -69,12 +72,12 @@ namespace Architecture.DataBase.DatabaseFirst
                     .HasConstraintName("FK_ModuleAction_ModuleAction_Module");
             });
 
-            modelBuilder.Entity<Role>(entity =>
-            {
-                entity.Property(e => e.CreatedUtcdate).HasColumnName("CreatedUTCDate");
+            //modelBuilder.Entity<Roles>(entity =>
+            //{
+            //    entity.Property(e => e.CreatedUtcdate).HasColumnName("CreatedUTCDate");
 
-                entity.Property(e => e.UpdatedUtcdate).HasColumnName("UpdatedUTCDate");
-            });
+            //    entity.Property(e => e.UpdatedUtcdate).HasColumnName("UpdatedUTCDate");
+            //});
 
             modelBuilder.Entity<RoleModuleAction>(entity =>
             {
@@ -95,11 +98,11 @@ namespace Architecture.DataBase.DatabaseFirst
 
                 entity.Property(e => e.UpdatedUtcdate).HasColumnName("UpdatedUTCDate");
 
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.UserRole)
-                    .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserRole_UserRole_Role");
+                //entity.HasOne(d => d.Role)
+                //    .WithMany(p => p.UserRole)
+                //    .HasForeignKey(d => d.RoleId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_UserRole_UserRole_Role");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserRole)

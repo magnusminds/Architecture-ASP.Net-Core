@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\**" />
+    <Content Remove="Areas\Admin\**" />
+    <EmbeddedResource Remove="Areas\Admin\**" />
+    <None Remove="Areas\Admin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.Core" Version="3.3.107.17" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.111.18" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.16.0" />
+    <PackageReference Include="Azure.Storage.Common" Version="12.15.0" />
+    <PackageReference Include="jQuery" Version="3.4.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
+    <PackageReference Include="NToastNotify" Version="8.0.0" />
+    <PackageReference Include="Razor.Templating.Core" Version="1.7.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.7.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="UAParser" Version="3.1.47" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Architecture.BusinessLogic\Architecture.BusinessLogic.csproj" />
+    <ProjectReference Include="..\Architecture.Core\Architecture.Core.csproj" />
+    <ProjectReference Include="..\Architecture.CronJob\Architecture.CronJob.csproj" />
+    <ProjectReference Include="..\Architecture.Dto\Architecture.Dto.csproj" />
+    <ProjectReference Include="..\Architecture.Infrastructure\Architecture.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\" />
+  </ItemGroup>
+
+</Project>
