@@ -1,6 +1,4 @@
-﻿
-
-namespace Architecture.Dto.RolePermission
+﻿namespace Architecture.Dto.RolePermission
 {
     public class RolePermissionRequestDto
     {

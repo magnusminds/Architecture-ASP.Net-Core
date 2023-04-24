@@ -45,8 +45,7 @@ namespace Architecture.Infrastructure.Identity.Seed
 
         private static async Task GrantPermissionToAdminUser(RoleManager<ApplicationRole> roleManager, ApplicationRole administratorRole)
         {
-            var collection = new List<string>() { "Users", "Role", "Dashboard" 
-                };
+            var collection = new List<string>() { "Users", "Roles", "Dashboard"};
             foreach (var item in collection)
             {
                 await AddPermissionClaim(roleManager, administratorRole, item);

@@ -2,9 +2,9 @@
 {
     public class CustomClaimTypes
     {
-        public const string Permission = "Permission";
-        public const string UserPermission = "User";
-        public const string RolePermission = "Role";
-        public const string CustomerPermission = "Customer";
+        public const string Permission = "Permissions";
+        public const string UserPermission = "Users";
+        public const string RolePermission = "Roles";
+        public const string CustomerPermission = "Customers";
     }
 }

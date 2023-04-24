@@ -46,18 +46,17 @@ namespace Architecture.WebAPI.Controllers
 
             var allPermissions = ApplicationIdentityConstants.Permissions.GetAllPermissions();
             var rolePermissionResponseDto = await _unitOfWorkBL.RolePermissionBL.GetRolePermissions(Convert.ToString(_currentUser.RoleId), allPermissions, cancellationToken);
-            var appPortalDetails = rolePermissionResponseDto.Where(a => a.ApplicationType == "App").ToList();
-            var permissionsDetails = await _unitOfWorkBL.RolePermissionBL.GetPermissions(appPortalDetails, cancellationToken);
-            if (permissionsDetails == null)
+            var appPortalDetails = rolePermissionResponseDto.ToList();
+            if (appPortalDetails == null)
             {
-                return new ApiResponse(message: "No Data found", result: permissionsDetails, statusCode: 404);
+                return new ApiResponse(message: "No Data found", result: appPortalDetails, statusCode: 404);
             }
 
             var cacheOptions = new MemoryCacheEntryOptions()
                 .SetAbsoluteExpiration(TimeSpan.FromHours(12));
-            _memoryCache.Set(cacheString, permissionsDetails, cacheOptions);
+            _memoryCache.Set(cacheString, appPortalDetails, cacheOptions);
 
-            return new ApiResponse(message: "Data found", result: permissionsDetails, statusCode: 200);
+            return new ApiResponse(message: "Data found", result: appPortalDetails, statusCode: 200);
         }
 
         [HttpPost("AuthenticateAPI")]

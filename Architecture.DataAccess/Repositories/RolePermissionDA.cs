@@ -37,5 +37,10 @@ namespace Architecture.DataAccess.Repositories
         {
             return await _roleManager.RemoveClaimAsync(applicationRole, new Claim(CustomClaimTypes.Permission, claimValue));
         }
+
+        public async Task<IdentityResult> CreateRolePermissionClaims(ApplicationRole applicationRole, string permission, CancellationToken cancellationToken)
+        {
+            return await _roleManager.AddClaimAsync(applicationRole, new Claim(CustomClaimTypes.Permission, permission));
+        }
     }
 }

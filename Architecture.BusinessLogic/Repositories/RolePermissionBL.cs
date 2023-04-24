@@ -1,6 +1,5 @@
 ﻿using Architecture.BusinessLogic.Interface;
 using Architecture.DataAccess.UnitOfWork;
-using Architecture.Dto.APIResponse;
 using Architecture.Dto.RolePermission;
 using Architecture.Entities.Model;
 using Microsoft.AspNetCore.Identity;
@@ -35,36 +34,25 @@ namespace Architecture.BusinessLogic.Repositories
             return await _unitOfWorkDA.RolePermissionDA.GetRoleHasPermission(applicationRole, permission, cancellationToken);
         }
 
-        public async Task<List<RolePermissionResponseDto>> GetRolePermissions(string Id, List<string> allPermissions, CancellationToken cancellationToken)
+        public async Task<IList<string>> GetRolePermissions(string roleId, List<string> allPermissions, CancellationToken cancellationToken)
         {
-            var allClaimsByRole = await GetAllRoleClaimsByRole(Id, cancellationToken);
-            List<RolePermissionResponseDto> RolePermissionResponseDto = new List<RolePermissionResponseDto>();
-            foreach (var item in allPermissions)
-            {
-                RolePermissionResponseDto moduleResponseDtoChild = RolePermissionResponseDto.FirstOrDefault(p => p.ApplicationType == item.Split(".")[1]);
-                if (moduleResponseDtoChild == null)
-                {
-                    moduleResponseDtoChild = new RolePermissionResponseDto();
-                    moduleResponseDtoChild.ApplicationType = item.Split(".")[1];
-                    moduleResponseDtoChild.RolePermissionList = new List<PermissiongResponseDto>();
-                    RolePermissionResponseDto.Add(moduleResponseDtoChild);
-                }
-                PermissiongResponseDto permissionResponseDto = new PermissiongResponseDto();
-                permissionResponseDto.Id = item.Split(".")[1] + item.Split(".")[2];
-                permissionResponseDto.Module = item.Split(".")[2];
-                permissionResponseDto.PermissionType = item.Split(".")[2];
-                permissionResponseDto.Permission = item;
-                if (allClaimsByRole.Any(x => x.Value == item))
-                    permissionResponseDto.IsChecked = "checked";
-                moduleResponseDtoChild.RolePermissionList.Add(permissionResponseDto);
-            }
-            return RolePermissionResponseDto;
+            var allClaimsByRole = await GetAllRoleClaimsByRole(roleId, cancellationToken);
+            return allClaimsByRole.Select(x => x.Value).ToList();
         }
 
         public async Task CreateRoleClaim(RolePermissionRequestDto rolePermissionRequestDto, CancellationToken cancellationToken)
         {
             var applicationRole = await _roleManager.FindByIdAsync(rolePermissionRequestDto.RoleId);
             await _unitOfWorkDA.RolePermissionDA.CreateRolePermission(applicationRole, rolePermissionRequestDto.Permission, cancellationToken);
+        }
+
+        public async Task CreateListRoleClaim(List<string> appDetails,string roleId, CancellationToken cancellationToken)
+        {
+            var applicationRole = await _roleManager.FindByIdAsync(roleId);
+            foreach (var item in appDetails)
+            {
+                await _unitOfWorkDA.RolePermissionDA.CreateRolePermission(applicationRole, item, cancellationToken);
+            }
         }
 
         public async Task DeleteRoleClaim(RolePermissionRequestDto model, CancellationToken cancellationToken)
@@ -75,26 +63,18 @@ namespace Architecture.BusinessLogic.Repositories
 
         #region Api Method
 
-        public async Task<List<PermissionsAPIResponse>> GetPermissions(List<RolePermissionResponseDto> appDetails, CancellationToken cancellationToken)
+        public async Task<List<string>> GetPermissions(List<string> appDetails, CancellationToken cancellationToken)
         {
-            List<PermissionsAPIResponse> permissionsAPIResponseList = new List<PermissionsAPIResponse>();
-            var rolePermissionList = appDetails.Select(a => a.RolePermissionList).ToList();
-            var allModules = rolePermissionList[0].Select(a => a.Module).ToList();
-            foreach (var item in appDetails[0].RolePermissionList.DistinctBy(x => x.Module))
+            List<string> permissionsAPIResponseList = new List<string>();
+            //  var rolePermissionList = appDetails.Select(a => a.Permission).ToList();
+            var rolePermissionList = appDetails.ToList();
+            foreach (var item in rolePermissionList)
             {
-                PermissionsAPIResponse permissionsAPIResponse = new PermissionsAPIResponse();
-                foreach (var item2 in appDetails[0].RolePermissionList.Where(x => x.Module == item.Module))
-                {
-                    permissionsAPIResponse.ModuleName = item.Module;
-                    Permissions permissionAccess = new Permissions()
-                    {
-                        Feature = item2.Permission.Replace("Permissions.App." + item.Module + ".", "").Replace("Permissions.MfgApp." + item.Module + ".", ""),
-                        HasAccess = item2.IsChecked == "checked" ? true : false
-                    };
-                    permissionsAPIResponse.Permissions.Add(permissionAccess);
-                }
-                permissionsAPIResponseList.Add(permissionsAPIResponse);
+                permissionsAPIResponseList.Add(item);
             }
+
+          
+
             return permissionsAPIResponseList;
         }
 
