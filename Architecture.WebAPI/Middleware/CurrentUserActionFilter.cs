@@ -13,14 +13,12 @@ namespace Architecture.WebAPI.Middleware
         private readonly CurrentUser _currentUser;
         private readonly IConfiguration _configuration;
 
-
         public CurrentUserActionFilter(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, CurrentUser currentUser, IConfiguration configuration)
         {
             _currentUser = currentUser;
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
-
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)

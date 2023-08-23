@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Architecture.CronJob.Service.WhatsApp.Repository
 {
@@ -38,6 +37,5 @@ namespace Architecture.CronJob.Service.WhatsApp.Repository
             result = JsonSerializer.Serialize(new { message = Newtonsoft.Json.JsonConvert.SerializeObject("Cronjob has ended for WhatsApp") });
             _logger.LogWarning(result);
         }
-
     }
 }

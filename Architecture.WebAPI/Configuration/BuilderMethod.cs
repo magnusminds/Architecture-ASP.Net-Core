@@ -1,9 +1,8 @@
-﻿using MagnusMinds.Utility.EmailService;
+﻿using Architecture.Infrastructure.ServiceDependency;
+using MagnusMinds.Utility.EmailService;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Reflection;
-using Architecture.Infrastructure.ServiceDependency;
-
 
 namespace Architecture.WebAPI.Configuration
 {

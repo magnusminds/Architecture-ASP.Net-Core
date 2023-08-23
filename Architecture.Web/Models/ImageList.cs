@@ -1,6 +1,4 @@
-﻿using Amazon;
-
-namespace Architecture.Web.Models
+﻿namespace Architecture.Web.Models
 {
     public class ImageList
     {

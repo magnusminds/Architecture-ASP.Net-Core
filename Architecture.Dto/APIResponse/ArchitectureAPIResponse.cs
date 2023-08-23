@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-
 namespace Architecture.Dto.APIResponse
 {
     public class APIResponse

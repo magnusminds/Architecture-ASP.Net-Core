@@ -2,18 +2,11 @@
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Architecture.Web.Helper
 {
     public static class StorageHelper
     {
-
         public static bool IsImage(IFormFile file)
         {
             if (file.ContentType.Contains("image"))

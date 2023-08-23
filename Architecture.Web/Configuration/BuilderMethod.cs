@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Serilog;
 
-
-
 namespace Architechture.Web.Configuration
 {
     public static class BuilderMethod

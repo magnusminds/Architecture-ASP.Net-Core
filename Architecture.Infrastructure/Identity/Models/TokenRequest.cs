@@ -2,7 +2,6 @@
 
 using System.ComponentModel.DataAnnotations;
 
-
 namespace Architecture.Infrastructure.Identity.Models
 {
     public class TokenRequest

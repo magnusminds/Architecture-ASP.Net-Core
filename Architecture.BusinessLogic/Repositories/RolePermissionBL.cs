@@ -46,7 +46,7 @@ namespace Architecture.BusinessLogic.Repositories
             await _unitOfWorkDA.RolePermissionDA.CreateRolePermission(applicationRole, rolePermissionRequestDto.Permission, cancellationToken);
         }
 
-        public async Task CreateListRoleClaim(List<string> appDetails,string roleId, CancellationToken cancellationToken)
+        public async Task CreateListRoleClaim(List<string> appDetails, string roleId, CancellationToken cancellationToken)
         {
             var applicationRole = await _roleManager.FindByIdAsync(roleId);
             foreach (var item in appDetails)
@@ -72,8 +72,6 @@ namespace Architecture.BusinessLogic.Repositories
             {
                 permissionsAPIResponseList.Add(item);
             }
-
-          
 
             return permissionsAPIResponseList;
         }

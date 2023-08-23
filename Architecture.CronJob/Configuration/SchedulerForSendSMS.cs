@@ -1,10 +1,5 @@
 ﻿using Architecture.CronJob.Service.SMS.Interface;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Architecture.CronJob.Configuration
 {
@@ -15,7 +10,6 @@ namespace Architecture.CronJob.Configuration
         public SchedulerForSendSMS(ISendSMS sendSMS, IServiceScopeFactory serviceScopeFactory, IScheduleConfig<SchedulerForSendSMS> config) : base(config.CronExpression, config.TimeZoneInfo, config.emailSenderBL)
         {
             _sendSMS = sendSMS;
-          
         }
 
         public override Task StartAsync(CancellationToken cancellationToken)

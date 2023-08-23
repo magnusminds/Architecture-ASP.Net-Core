@@ -16,13 +16,11 @@ namespace Architechture.Web.Middleware
         private CurrentUser _currentUser;
         private IEmailHelper _emailHelper;
 
-
         public UseExceptionHandlerMiddleware(RequestDelegate next, IConfiguration configuration)
         {
             _next = next;
             _configuration = configuration;
         }
-
 
         public async Task Invoke(HttpContext context)
         {
@@ -42,7 +40,6 @@ namespace Architechture.Web.Middleware
             {
                 return;
             }
-
             catch (Exception error)
             {
                 var response = context.Response;
@@ -143,7 +140,5 @@ namespace Architechture.Web.Middleware
                                  + htmlTableEnd;
             return htmlContent;
         }
-
-
     }
 }

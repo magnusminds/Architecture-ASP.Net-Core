@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 
-
 namespace Architecture.CronJob.Service.Email.Repository
 {
     public class SendEmailForPriceUpdates : ISendEmailForPriceUpdates
@@ -32,7 +31,7 @@ namespace Architecture.CronJob.Service.Email.Repository
                 result = JsonSerializer.Serialize(new { message = Newtonsoft.Json.JsonConvert.SerializeObject("Email notification is not active.") });
                 _logger.LogWarning(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = JsonSerializer.Serialize(new { message = Newtonsoft.Json.JsonConvert.SerializeObject("Cronjob has an exception for SendEmailForPriceUpdates - Message : " + ex.Message) });
                 _logger.LogError(result);
@@ -41,7 +40,5 @@ namespace Architecture.CronJob.Service.Email.Repository
             result = JsonSerializer.Serialize(new { message = Newtonsoft.Json.JsonConvert.SerializeObject("Cronjob has ended for SendEmailForPriceUpdates") });
             _logger.LogWarning(result);
         }
-
-
     }
 }

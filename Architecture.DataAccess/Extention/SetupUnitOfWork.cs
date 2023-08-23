@@ -16,7 +16,6 @@ namespace Architecture.DataAccess.Extention
             services.AddScoped<IRolePermissionDA, RolePermissionDA>();
             services.AddScoped<IRoleDA, RoleDA>();
             services.AddScoped<ILoginTokenDA, LoginTokenDA>();
-   
 
             // KEEP THIS LINE AT THE END.
             services.AddScoped<IUnitOfWorkDA, UnitOfWorkDA>();

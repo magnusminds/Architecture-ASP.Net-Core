@@ -2,7 +2,6 @@
 using Architecture.Entities.Model;
 using AutoMapper;
 
-
 namespace Architecture.BusinessLogic.MapperDto
 {
     public class MapUser : Profile

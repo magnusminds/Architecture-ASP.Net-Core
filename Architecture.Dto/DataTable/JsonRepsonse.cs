@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-
 namespace Architecture.Dto.DataTable
 {
     public class JsonRepsonse<T> where T : class

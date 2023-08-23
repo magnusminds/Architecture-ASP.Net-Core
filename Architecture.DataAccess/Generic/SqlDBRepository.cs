@@ -3,7 +3,6 @@ using MagnusMinds.Utility;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-
 namespace Architecture.DataAccess.Generic
 {
     public partial class SqlDBRepository<TEntity> : ISqlRepository<TEntity> where TEntity : class
@@ -301,10 +300,8 @@ namespace Architecture.DataAccess.Generic
             }
             catch (Exception e)
             {
-
                 throw;
             }
-
         }
 
         /// <summary>

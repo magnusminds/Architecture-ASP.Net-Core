@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-
 namespace Architecture.Dto.User
 {
     public class ResetPasswordRequestDto

@@ -6,6 +6,7 @@
         public static readonly string TenantCookieName = "TenantId";
         public static readonly string TenantHeaderName = "TenantId";
         public static readonly string EncryptionSecret = "MAGNUSMINDS_SAB_KA_BAAP";
+
         public static class Roles
         {
             public static readonly string SuperAdmin = "SuperAdmin";
@@ -14,6 +15,7 @@
 
             public static readonly string[] RolesSupported = { SuperAdmin, Admin, Customer };
         }
+
         public static class Permissions
         {
             public static List<string> GeneratePermissionsForModule(string module)
@@ -60,7 +62,6 @@
                 public const string Update = "Permissions.Roles.Update";
                 public const string Delete = "Permissions.Roles.Delete";
             }
-
 
             public static class Customer
             {

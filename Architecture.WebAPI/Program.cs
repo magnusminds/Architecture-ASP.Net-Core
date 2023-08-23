@@ -1,16 +1,10 @@
-using Architecture.Entities;
 using Architecture.WebAPI.Configuration;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.ConfigureBuilder();
 
 builder.Build().ConfigureWebApplication();
-
-
-
 
 // Add services to the container.
 

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-
 namespace Architecture.DataAccess.Interface
 {
     public interface IRolePermissionDA

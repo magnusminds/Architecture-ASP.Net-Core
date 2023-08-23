@@ -25,7 +25,6 @@ namespace Architecture.BusinessLogic.Repositories
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IMapper _mapper;
 
-
         public UsersBL(IUnitOfWorkDA unitOfWorkDA, CurrentUser currentUser, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IMapper mapper)
         {
             _unitOfWorkDA = unitOfWorkDA;
@@ -59,14 +58,14 @@ namespace Architecture.BusinessLogic.Repositories
             var allUser = await _unitOfWorkDA.UserDA.GetUsers(cancellationToken);
             var aspNetUserRoles = await _unitOfWorkDA.UserDA.GetAspNetUserRoles(cancellationToken);
             var aspnetRole = await _unitOfWorkDA.RoleDA.GetRoles(cancellationToken);
-           // var manufacturingWorkflowMapping = await _unitOfWorkDA.ManufacturingWorkflowMappingDA.GetAll(cancellationToken);
+            // var manufacturingWorkflowMapping = await _unitOfWorkDA.ManufacturingWorkflowMappingDA.GetAll(cancellationToken);
             var userResponseDto = (from x in allUser
                                    join y in aspNetUserRoles on x.Id equals y.UserId into AspNetUserRolesMapingDetails
                                    from AspNewUserRolesMat in AspNetUserRolesMapingDetails.DefaultIfEmpty()
                                    join z in aspnetRole on AspNewUserRolesMat.RoleId equals z.Id into AspNetUserRolesDetails
                                    from t in AspNetUserRolesDetails.DefaultIfEmpty()
-                                   //join a in await _unitOfWorkDA.UserTenantMappingDA.GetAll(cancellationToken)
-                                   //  on new { x.UserId } equals new { a.UserId }
+                                       //join a in await _unitOfWorkDA.UserTenantMappingDA.GetAll(cancellationToken)
+                                       //  on new { x.UserId } equals new { a.UserId }
                                    where x.UserId == _currentUser.TenantId
                                    orderby x.UserId ascending
                                    select new UserResponseDto
@@ -79,7 +78,7 @@ namespace Architecture.BusinessLogic.Repositories
                                        PhoneNumber = x.PhoneNumber,
                                        UserId = x.UserId,
                                        IsActive = x.IsActive,
-                                   }).Where(x => !(x.UserRole ==AspNetRolesEnum.Contractor.ToString() || x.UserRole == AspNetRolesEnum.StoreManager.ToString() || x.UserRole == AspNetRolesEnum.Supervisor.ToString()));
+                                   }).Where(x => !(x.UserRole == AspNetRolesEnum.Contractor.ToString() || x.UserRole == AspNetRolesEnum.StoreManager.ToString() || x.UserRole == AspNetRolesEnum.Supervisor.ToString()));
 
             var userFilteredData = FilterUserData(dataTableFilterDto, userResponseDto);
             var userData = new PagedList<UserResponseDto>(userFilteredData, dataTableFilterDto);
@@ -91,8 +90,8 @@ namespace Architecture.BusinessLogic.Repositories
             // Get ApplicationUser by Id
             var userAllData = await GetAllUsersData(cancellationToken);
             var applicationUser = (from x in userAllData
-                                   //join y in await _unitOfWorkDA.UserTenantMappingDA.GetAll(cancellationToken)
-                                   //on new { x.Id } equals new { y.UserId }
+                                       //join y in await _unitOfWorkDA.UserTenantMappingDA.GetAll(cancellationToken)
+                                       //on new { x.Id } equals new { y.UserId }
                                    where x.UserId == Id
                                    select new UserRequestDto
                                    {
@@ -182,6 +181,7 @@ namespace Architecture.BusinessLogic.Repositories
             await _unitOfWorkDA.UserDA.UpdateUser(_mapper.Map<ApplicationUser>(userById));
             return _mapper.Map<UserRequestDto>(userById);
         }
+
         public async Task<UserRequestDto> ReactiveUser(int Id, CancellationToken cancellationToken)
         {
             // Active AspNetUser
@@ -313,6 +313,7 @@ namespace Architecture.BusinessLogic.Repositories
             }
             return userResponseDto;
         }
-        #endregion
+
+        #endregion Private Methods
     }
 }

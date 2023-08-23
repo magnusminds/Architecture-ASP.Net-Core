@@ -1,6 +1,4 @@
-﻿using Architecture.Dto.APIResponse;
-using Architecture.Dto.RolePermission;
-using Org.BouncyCastle.Crypto.Tls;
+﻿using Architecture.Dto.RolePermission;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading;
@@ -18,12 +16,10 @@ namespace Architecture.BusinessLogic.Interface
 
         public Task CreateRoleClaim(RolePermissionRequestDto rolePermissionRequestDto, CancellationToken cancellationToken);
 
-        public Task CreateListRoleClaim(List<string> allAppPermissions,string roleId, CancellationToken cancellationToken);
+        public Task CreateListRoleClaim(List<string> allAppPermissions, string roleId, CancellationToken cancellationToken);
 
         public Task DeleteRoleClaim(RolePermissionRequestDto model, CancellationToken cancellationToken);
 
         public Task<List<string>> GetPermissions(List<string> allAppPermissions, CancellationToken cancellationToken);
-
-
     }
 }

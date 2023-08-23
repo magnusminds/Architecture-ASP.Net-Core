@@ -1,6 +1,4 @@
-﻿
-
-namespace Architecture.Dto.Paging
+﻿namespace Architecture.Dto.Paging
 {
     public interface IPagedList<T> : IList<T>
     {

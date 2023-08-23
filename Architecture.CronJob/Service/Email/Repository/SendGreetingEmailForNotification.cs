@@ -4,7 +4,6 @@ using Architecture.Dto;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 
-
 namespace Architecture.CronJob.Service.Email.Repository
 {
     public class SendGreetingEmailForNotification : ISendGreetingEmailForNotification
@@ -12,7 +11,6 @@ namespace Architecture.CronJob.Service.Email.Repository
         private readonly IEmailSenderBL _emailSenderBL;
         private readonly CurrentUser _currentUser;
         private readonly ILogger<SendGreetingEmailForNotification> _logger;
-
 
         public async Task SendGreetingEmail(CancellationToken cancellationToken)
         {

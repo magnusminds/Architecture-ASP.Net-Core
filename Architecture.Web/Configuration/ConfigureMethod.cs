@@ -26,7 +26,6 @@ namespace Architechture.Web.Configuration
             app.UseLocalizationMiddleware();
             app.UseExceptionHandlerMiddleware();
 
-
             app.UseRouting();
 
             app.UseAuthentication();

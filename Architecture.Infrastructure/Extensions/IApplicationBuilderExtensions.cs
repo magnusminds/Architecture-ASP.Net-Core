@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-
 namespace Architecture.Infrastructure.Extensions
 {
     public static class IApplicationBuilderExtensions

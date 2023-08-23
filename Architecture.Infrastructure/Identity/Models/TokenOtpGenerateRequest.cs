@@ -18,7 +18,5 @@ namespace Architecture.Infrastructure.Identity.Models
         [Required]
         [JsonProperty("MobileDeviceId")]
         public string MobileDeviceId { get; set; }
-
-
     }
 }

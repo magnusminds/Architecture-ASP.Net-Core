@@ -2,13 +2,7 @@
 using Architecture.DataAccess.Interface;
 using Architecture.Dto;
 using Architecture.Entities.Model;
-using MagnusMinds.Utility;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Architecture.DataAccess.Repositories
 {
@@ -34,7 +28,6 @@ namespace Architecture.DataAccess.Repositories
         {
             return await _roles.GetAsync(cancellationToken, x => x.IsDeleted == false);
         }
-
 
         public async Task<IdentityResult> CreateRole(ApplicationRole model)
         {

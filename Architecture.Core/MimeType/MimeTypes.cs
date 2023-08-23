@@ -49,7 +49,7 @@
         /// </summary>
         public const string ApplicationXZipCo = "application/x-zip-co";
 
-        #endregion
+        #endregion application/*
 
         #region image/*
 
@@ -83,7 +83,7 @@
         /// </summary>
         public const string ImageTiff = "image/tiff";
 
-        #endregion
+        #endregion image/*
 
         #region text/*
 
@@ -112,6 +112,6 @@
         /// </summary>
         public const string TextXlsx = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-        #endregion
+        #endregion text/*
     }
 }

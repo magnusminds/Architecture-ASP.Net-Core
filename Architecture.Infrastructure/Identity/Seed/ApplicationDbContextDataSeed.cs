@@ -18,7 +18,6 @@ namespace Architecture.Infrastructure.Identity.Seed
             // Add roles supported
             await roleManager.CreateAsync(new ApplicationRole(ApplicationIdentityConstants.Roles.Admin));
             await roleManager.CreateAsync(new ApplicationRole(ApplicationIdentityConstants.Roles.SuperAdmin));
-          
 
             // New admin user
             string adminUserName = "kparmar@magnusminds.net";
@@ -45,7 +44,7 @@ namespace Architecture.Infrastructure.Identity.Seed
 
         private static async Task GrantPermissionToAdminUser(RoleManager<ApplicationRole> roleManager, ApplicationRole administratorRole)
         {
-            var collection = new List<string>() { "Users", "Roles", "Dashboard"};
+            var collection = new List<string>() { "Users", "Roles", "Dashboard" };
             foreach (var item in collection)
             {
                 await AddPermissionClaim(roleManager, administratorRole, item);

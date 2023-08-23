@@ -1,7 +1,4 @@
-﻿using Architecture.DataAccess.Generic;
-using Architecture.DataAccess.Interface;
-using Architecture.Dto.Paging;
-using Architecture.Entities.Model;
+﻿using Architecture.DataAccess.Interface;
 
 namespace Architecture.DataAccess.Repositories
 {

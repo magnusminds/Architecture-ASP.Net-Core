@@ -1,8 +1,5 @@
 ﻿using Architechture.Web.Controllers;
-using Architecture.BusinessLogic;
 using Architecture.BusinessLogic.Interface;
-using Architecture.Entities;
-using Architecture.Utility;
 using Architecture.Web.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -19,11 +16,13 @@ namespace Architecture.Web.Controllers
         }
 
         #region Login Logout
+
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
+
         [HttpGet]
         public async Task<IActionResult> LogoutAsync()
         {
@@ -49,7 +48,8 @@ namespace Architecture.Web.Controllers
             //}
             return RedirectToAction("Index", "Users", new { area = "Admin" });
         }
-        #endregion
+
+        #endregion Login Logout
 
         [HttpGet]
         public IActionResult ForgetPassword()
@@ -70,8 +70,8 @@ namespace Architecture.Web.Controllers
                 //}
                 //else
                 //{
-                    ModelState.AddModelError("UserName", "User not exist in the system.");
-                    return View("Index",null);
+                ModelState.AddModelError("UserName", "User not exist in the system.");
+                return View("Index", null);
                 //}
             }
             return RedirectToAction("Index", "Users", new { area = "Admin" });

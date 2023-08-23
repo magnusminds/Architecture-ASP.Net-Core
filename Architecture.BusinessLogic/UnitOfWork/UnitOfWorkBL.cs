@@ -48,6 +48,5 @@ namespace Architecture.BusinessLogic.UnitOfWork
         }
 
         #endregion DisposeMethod
-
     }
 }

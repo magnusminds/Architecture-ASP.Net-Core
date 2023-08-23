@@ -1,8 +1,11 @@
-﻿
+﻿using Architecture.BusinessLogic.Interface;
 using Architecture.Core.UserDefinedException;
 using Architecture.DataAccess.UnitOfWork;
 using Architecture.Dto;
+using Architecture.Dto.DataTable;
+using Architecture.Dto.Paging;
 using Architecture.Dto.Role;
+using Architecture.Entities.Model;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -10,10 +13,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Architecture.Dto.Paging;
-using Architecture.BusinessLogic.Interface;
-using Architecture.Dto.DataTable;
-using Architecture.Entities.Model;
 
 namespace Architecture.BusinessLogic.Repositories
 {
@@ -133,7 +132,6 @@ namespace Architecture.BusinessLogic.Repositories
             await _unitOfWorkDA.RoleDA.UpdateRole(_mapper.Map<ApplicationRole>(RoleById));
             return _mapper.Map<RoleRequestDto>(RoleById);
         }
-
 
         #region Private Method
 

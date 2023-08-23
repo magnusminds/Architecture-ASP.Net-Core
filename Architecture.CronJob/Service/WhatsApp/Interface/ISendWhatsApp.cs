@@ -1,5 +1,4 @@
-﻿
-namespace Architecture.CronJob.Service.WhatsApp.Interface
+﻿namespace Architecture.CronJob.Service.WhatsApp.Interface
 {
     public interface ISendWhatsApp
     {

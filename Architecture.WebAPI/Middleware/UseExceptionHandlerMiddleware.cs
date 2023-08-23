@@ -1,11 +1,10 @@
-﻿using Architecture.Dto;
+﻿using Architecture.Core.Services.Email;
+using Architecture.Dto;
+using Architecture.Infrastructure.Identity.Models;
 using AutoWrapper.Wrappers;
 using System.Net;
 using System.Text.Json;
 using UAParser;
-using Architecture.Infrastructure.Identity.Models;
-
-using Architecture.Core.Services.Email;
 
 namespace Architecture.WebAPI.Middleware
 {
@@ -17,7 +16,6 @@ namespace Architecture.WebAPI.Middleware
         private CurrentUser _currentUser;
         private IEmailHelper _emailHelper;
         private ProjectSettings _settings;
-
 
         public UseExceptionHandlerMiddleware(RequestDelegate next, IConfiguration configuration)
         {
@@ -110,7 +108,6 @@ namespace Architecture.WebAPI.Middleware
                 }
             }
         }
-
 
         private static string GenerateHTMl(dynamic logEntry)
         {

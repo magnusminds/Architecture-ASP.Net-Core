@@ -4,7 +4,7 @@ namespace Architecture.WebAPI.Configuration
 {
     public static class MvcConfig
     {
-        public static void  SetupControllers(this IServiceCollection services)
+        public static void SetupControllers(this IServiceCollection services)
         {
             services.AddHttpContextAccessor();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -13,8 +13,6 @@ namespace Architecture.WebAPI.Configuration
             {
                 options.Filters.AddService<CurrentUserActionFilter>();
             });
-
         }
     }
-    
 }

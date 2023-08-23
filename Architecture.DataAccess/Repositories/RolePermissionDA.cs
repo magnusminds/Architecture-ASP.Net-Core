@@ -4,7 +4,6 @@ using Architecture.Entities.Model;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-
 namespace Architecture.DataAccess.Repositories
 {
     public class RolePermissionDA : IRolePermissionDA

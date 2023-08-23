@@ -1,17 +1,12 @@
 ﻿using Architecture.CronJob.Service.WhatsApp.Interface;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Architecture.CronJob.Configuration
 {
     public class SchedulerForSendWhatsApp : CronJobService
     {
         private readonly ISendWhatsApp _sendWhatsApp;
-     
+
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
         public SchedulerForSendWhatsApp(ISendWhatsApp sendWhatsApp, IServiceScopeFactory serviceScopeFactory, IScheduleConfig<SchedulerForSendWhatsApp> config) : base(config.CronExpression, config.TimeZoneInfo, config.emailSenderBL)
@@ -19,7 +14,6 @@ namespace Architecture.CronJob.Configuration
             _sendWhatsApp = sendWhatsApp;
             _serviceScopeFactory = serviceScopeFactory;
             IServiceScope scope = _serviceScopeFactory.CreateScope();
-         
         }
 
         public override Task StartAsync(CancellationToken cancellationToken)

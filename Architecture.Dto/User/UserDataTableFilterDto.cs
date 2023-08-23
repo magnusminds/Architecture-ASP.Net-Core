@@ -1,7 +1,6 @@
 ﻿using Architecture.Dto.DataTable;
 using Newtonsoft.Json;
 
-
 namespace Architecture.Dto.User
 {
     public class UserDataTableFilterDto : DataTableFilterDto

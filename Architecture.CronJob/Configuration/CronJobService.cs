@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Hosting;
-using Architecture.BusinessLogic.Interface;
+﻿using Architecture.BusinessLogic.Interface;
 using Cronos;
+using Microsoft.Extensions.Hosting;
 
 namespace Architecture.CronJob
 {
@@ -13,7 +13,7 @@ namespace Architecture.CronJob
 
         protected CronJobService(string cronExpression, TimeZoneInfo timeZoneInfo, IEmailSenderBL emailSenderBL)
         {
-           _expression = CronExpression.Parse(cronExpression);
+            _expression = CronExpression.Parse(cronExpression);
             _timeZoneInfo = timeZoneInfo;
             _emailSenderBL = emailSenderBL;
         }
@@ -23,7 +23,6 @@ namespace Architecture.CronJob
             if (_timer != null)
                 _timer.Dispose();
         }
-
 
         public virtual async Task StartAsync(CancellationToken cancellationToken)
         {
@@ -161,7 +160,4 @@ namespace Architecture.CronJob
             await Task.CompletedTask;
         }
     }
-
-
-
 }

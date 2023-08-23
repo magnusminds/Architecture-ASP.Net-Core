@@ -1,8 +1,4 @@
-﻿
-
-
-
-namespace Architecture.DataAccess.Interface
+﻿namespace Architecture.DataAccess.Interface
 {
     public interface ILogEntryDA
     {

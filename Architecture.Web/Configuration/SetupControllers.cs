@@ -1,6 +1,5 @@
 ﻿using Architechture.Web.Middleware;
 
-
 namespace Architechture.Web.Configuration
 {
     public static class SetupController
@@ -15,7 +14,6 @@ namespace Architechture.Web.Configuration
             {
                 options.Filters.AddService<CurrentUserActionFilter>();
             });
-
         }
     }
 }

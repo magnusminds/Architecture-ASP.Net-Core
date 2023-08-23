@@ -25,25 +25,27 @@ namespace Architecture.DataAccess.UnitOfWork
                 this.RolesDA = rolesDA;
                 this.RolePermissionDA = rolePermissionDA;
                 this.LoginTokenDA = loginTokenDA;
-
             }
         }
 
         #region TransactionMethod
+
         public async Task BeginTransactionAsync()
         {
             await _context.Database.BeginTransactionAsync();
         }
+
         public async Task CommitTransactionAsync()
         {
             await _context.Database.CommitTransactionAsync();
         }
+
         public async Task rollbackTransactionAsync()
         {
             await _context.Database.RollbackTransactionAsync();
         }
-        #endregion
 
+        #endregion TransactionMethod
 
         #region DisposeMethod
 
@@ -68,6 +70,5 @@ namespace Architecture.DataAccess.UnitOfWork
         }
 
         #endregion DisposeMethod
-
     }
 }

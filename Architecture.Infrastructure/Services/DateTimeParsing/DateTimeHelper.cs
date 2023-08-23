@@ -1,5 +1,4 @@
-﻿
-namespace Architecture.Infrastructure.Services.DateTimeParsing
+﻿namespace Architecture.Infrastructure.Services.DateTimeParsing
 {
     public partial class DateTimeHelper
     {

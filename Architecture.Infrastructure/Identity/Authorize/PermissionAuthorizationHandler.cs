@@ -3,7 +3,6 @@ using Architecture.Entities.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
-
 namespace Architecture.Infrastructure.Identity.Authorize
 {
     public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>

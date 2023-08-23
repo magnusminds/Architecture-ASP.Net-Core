@@ -32,7 +32,6 @@ namespace Architecture.WebAPI.Controllers
             return new ApiResponse(message: "Data found", result: null, statusCode: 200);
         }
 
-
         [HttpPost]
         public async Task<ApiResponse> CreateUser([FromBody] UserRequestDto userApiRequest, CancellationToken cancellationToken)
         {
@@ -44,7 +43,6 @@ namespace Architecture.WebAPI.Controllers
             }
             return new ApiResponse(message: "Data inserted successful", result: null, statusCode: 200);
         }
-
 
         [HttpPut("{userId}")]
         public async Task<ApiResponse> UpdateUser(int userId, [FromBody] UserRequestDto userApiRequest, CancellationToken cancellationToken)
@@ -70,7 +68,7 @@ namespace Architecture.WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="userApiRequest"></param>
         /// <param name="cancellationToken"></param>
@@ -97,7 +95,6 @@ namespace Architecture.WebAPI.Controllers
             }
         }
 
-
         private void ValidationRequest(ChangePasswordRequestDto orderRequestDto)
         {
             if (!ModelState.IsValid)
@@ -107,6 +104,5 @@ namespace Architecture.WebAPI.Controllers
         }
 
         #endregion Private Methods
-
     }
 }

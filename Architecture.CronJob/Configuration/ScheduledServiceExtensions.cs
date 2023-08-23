@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-
 namespace Architecture.CronJob.Configuration
 {
     public static class ScheduledServiceExtensions

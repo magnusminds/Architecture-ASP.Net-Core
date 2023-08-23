@@ -1,6 +1,5 @@
 ﻿using Architecture.CronJob.Service.Email.Interface;
 
-
 namespace Architecture.CronJob.Configuration
 {
     public class SchedulerForOrderInquiry : CronJobService

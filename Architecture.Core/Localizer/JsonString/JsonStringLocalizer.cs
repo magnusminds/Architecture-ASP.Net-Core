@@ -3,13 +3,13 @@ using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using System.Text;
 
-
 namespace Architecture.Core.Localizer.JsonString
 {
     public class JsonStringLocalizer : IStringLocalizer
     {
         private readonly IDistributedCache _cache;
         private readonly JsonSerializer _serializer = new JsonSerializer();
+
         public JsonStringLocalizer(IDistributedCache cache)
         {
             _cache = cache;

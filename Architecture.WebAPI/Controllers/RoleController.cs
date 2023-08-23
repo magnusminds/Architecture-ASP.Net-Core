@@ -2,7 +2,6 @@
 using Architecture.Core.Constants;
 using Architecture.Dto;
 using Architecture.Dto.Role;
-using Architecture.Dto.RolePermission;
 using AutoWrapper.Wrappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +17,6 @@ namespace Architecture.WebAPI.Controllers
         public readonly IStringLocalizer<RoleController> _localizer;
         private readonly CurrentUser _currentUser;
 
-
         public RoleController(IUnitOfWorkBL unitOfWorkBL, IStringLocalizer<RoleController> localizer, CurrentUser currentUser)
         {
             _localizer = localizer;
@@ -26,9 +24,8 @@ namespace Architecture.WebAPI.Controllers
             _currentUser = currentUser;
         }
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="dataTableFilterDto"></param>
         /// <param name="cancellationToken"></param>
@@ -46,7 +43,7 @@ namespace Architecture.WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roleRequestDto"></param>
         /// <param name="cancellationToken"></param>
@@ -68,7 +65,7 @@ namespace Architecture.WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="roleRequestDto"></param>
         /// <param name="cancellationToken"></param>
@@ -86,7 +83,7 @@ namespace Architecture.WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Id"></param>
         /// <param name="cancellationToken"></param>
@@ -102,7 +99,5 @@ namespace Architecture.WebAPI.Controllers
             }
             return new ApiResponse(message: "Data delete successful", result: null, statusCode: 200);
         }
-
-
     }
 }

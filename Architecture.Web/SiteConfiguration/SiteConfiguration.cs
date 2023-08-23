@@ -7,6 +7,7 @@ namespace Architecture.Web.Configuration
         public const string xmlDocumentPath = "SiteConfiguration";
         public const string xmlDocumentPathFileName = "SiteConfiguration.xml";
         private readonly IHostEnvironment _host;
+
         public SiteConfiguration(IHostEnvironment host)
         {
             _host = host;
@@ -15,26 +16,32 @@ namespace Architecture.Web.Configuration
 
         public CustomConfiguration customConfiguration;
     }
+
     #region XML conversion models
+
     public class CustomConfiguration
     {
         public ErrorMessages ErrorMessages { get; set; }
         public CommonSettings CommonSettings { get; set; }
     }
+
     public class ErrorMessages
     {
         public Error Please_fill_mandatory_fields { get; set; }
         public Error User_is_not_exist { get; set; }
         public Error Internal_error { get; set; }
     }
+
     public class CommonSettings
     {
         public string PasswordEncryptionSecurityKey { get; set; }
     }
+
     public class Error
     {
         public string Message { get; set; }
         public string Code { get; set; }
     }
-    #endregion
+
+    #endregion XML conversion models
 }

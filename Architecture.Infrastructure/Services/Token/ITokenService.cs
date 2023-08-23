@@ -1,12 +1,6 @@
-﻿using Architecture.Dto.User;
-using Architecture.Entities.Model;
+﻿using Architecture.Entities.Model;
 using Architecture.Infrastructure.Identity.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Architecture.Infrastructure.Services.Token
 {
@@ -62,7 +56,7 @@ namespace Architecture.Infrastructure.Services.Token
 
         Task<TokenResponse> AuthenticateAPI(TokenAPIRequest request, CancellationToken cancellationToken);
 
-       // Task<TokenResponse> LoginAPI(TokenAPIRequest request, CancellationToken cancellationToken);
+        // Task<TokenResponse> LoginAPI(TokenAPIRequest request, CancellationToken cancellationToken);
         Task Logout();
     }
 }

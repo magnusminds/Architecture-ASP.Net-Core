@@ -48,7 +48,7 @@ namespace Architechture.Web.Middleware
                             _currentUser.Name = user.FirstName;
                             _currentUser.FullName = user.FullName;
                             _currentUser.EmailAddress = user.Email;
-                            _currentUser.RoleId = userRoles.Id ;
+                            _currentUser.RoleId = userRoles.Id;
                             _currentUser.Role = string.Empty;
                             if (context.HttpContext.Request.Cookies[ApplicationIdentityConstants.TenantCookieName] != null)
                             {

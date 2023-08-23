@@ -1,6 +1,4 @@
-﻿using Architecture.Entities.Model;
-
-namespace Architecture.DataAccess.Interface
+﻿namespace Architecture.DataAccess.Interface
 {
     public interface IUserRolesDA
     {

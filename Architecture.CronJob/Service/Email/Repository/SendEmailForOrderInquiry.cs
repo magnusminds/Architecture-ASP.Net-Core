@@ -3,7 +3,6 @@ using Architecture.Dto;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 
-
 namespace Architecture.CronJob.Service.Email.Repository
 {
     public class SendEmailForOrderInquiry : ISendEmailForOrderInquiry
@@ -18,7 +17,6 @@ namespace Architecture.CronJob.Service.Email.Repository
 
             try
             {
-
             }
             catch (Exception ex)
             {
@@ -38,11 +36,8 @@ namespace Architecture.CronJob.Service.Email.Repository
 
             shortedUrl = string.Empty;
 
-
             return shortedUrl;
         }
-
-        
 
         #endregion private methods
     }

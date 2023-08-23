@@ -1,7 +1,4 @@
-﻿using Architecture.Dto.RolePermission;
-using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Architecture.Dto.Role
 {
@@ -11,6 +8,7 @@ namespace Architecture.Dto.Role
         {
             Permissions = new List<string>();
         }
+
         public string Id { get; set; }
 
         [Required]

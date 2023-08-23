@@ -1,6 +1,5 @@
 ﻿using Architecture.BusinessLogic.Interface;
 
-
 namespace Architecture.CronJob.Configuration
 {
     public interface IScheduleConfig<T>

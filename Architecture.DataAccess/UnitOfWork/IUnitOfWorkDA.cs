@@ -11,8 +11,11 @@ namespace Architecture.DataAccess.UnitOfWork
         IRolePermissionDA RolePermissionDA { get; }
 
         IUserRolesDA RolesDA { get; }
+
         Task BeginTransactionAsync();
+
         Task CommitTransactionAsync();
+
         Task rollbackTransactionAsync();
     }
 }

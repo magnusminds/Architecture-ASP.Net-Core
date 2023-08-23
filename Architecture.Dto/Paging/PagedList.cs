@@ -2,7 +2,6 @@
 using System.Linq.Dynamic.Core;
 using System.Reflection;
 
-
 namespace Architecture.Dto.Paging
 {
     public class PagedList<T> : List<T>, IPagedList<T>

@@ -16,7 +16,6 @@ namespace Architecture.BusinessLogic.Extension
             services.AddTransient<IRolePermissionBL, RolePermissionBL>();
             services.AddTransient<IEmailSenderBL, EmailSenderBL>();
 
-
             //KEEP THIS LINE AT THE BOTTOM
             services.AddScoped<IUnitOfWorkBL, UnitOfWorkBL>();
         }

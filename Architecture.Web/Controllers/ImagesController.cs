@@ -27,7 +27,6 @@ namespace Architecture.Web.Controllers
             bucketRegion = RegionEndpoint.APSouth1;
         }
 
-
         public async Task<IActionResult> getThumb()
         {
             //return Json(thumbnails());
@@ -73,10 +72,7 @@ namespace Architecture.Web.Controllers
                 Console.ReadKey();
             }
             return Json(list);
-
         }
-
-
 
         public async Task<IActionResult> Index()
         {
@@ -132,21 +128,15 @@ namespace Architecture.Web.Controllers
                 Console.ReadKey();
             }
             return View(list);
-
         }
-
-
 
         // upload Image in AWS
         //// POST /images/upload
         [HttpPost("images/upload1")]
-        //[Authorize(ApplicationIdentityConstants.Permissions.Image.Create)]
-        //[HttpPost("[action]")]
         public async Task<IActionResult> Upload(ICollection<IFormFile> files)
         {
             try
             {
-
                 List<UploadPartResponse> uploadResponses = new List<UploadPartResponse>();
 
                 // Setup information required to initiate the multipart upload.
@@ -231,7 +221,6 @@ namespace Architecture.Web.Controllers
                     }
                 }
                 return new AcceptedResult();
-
             }
             catch (AmazonS3Exception ex)
             {
@@ -243,14 +232,11 @@ namespace Architecture.Web.Controllers
                 Console.WriteLine("Unknown encountered on server. Message:'{0}' when writing an object", ex.Message);
                 return BadRequest(ex.Message);
             }
-
         }
 
         // upload Image in AZURE
         //// POST /images/upload
         [HttpPost("images/upload")]
-        //[Authorize(ApplicationIdentityConstants.Permissions.Image.Create)]
-        //[HttpPost("[action]")]
         public async Task<IActionResult> Upload1(ICollection<IFormFile> files)
         {
             bool isUploaded = false;
@@ -304,6 +290,7 @@ namespace Architecture.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         public Image GetReducedImage(int width, int height, Stream resourceImage)
         {
             try
@@ -321,8 +308,6 @@ namespace Architecture.Web.Controllers
 
         // GET /api/images/thumbnails
         [HttpGet]
-        //[Authorize(ApplicationIdentityConstants.Permissions.Image.View)]
-        //[HttpGet("thumbnails")]
         public async Task<IActionResult> thumbnails()
         {
             try
@@ -341,6 +326,5 @@ namespace Architecture.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
     }
 }

@@ -1,11 +1,10 @@
-﻿using Architecture.BusinessLogic;
-using Architecture.Web.Configuration;
+﻿using Architecture.Web.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Architechture.Web.Controllers
 {
-   // [ServiceFilter(typeof(LogConstantFilter))]
+    // [ServiceFilter(typeof(LogConstantFilter))]
     //[ServiceFilter(typeof(CustomExceptionFilterAttribute))]
     public class BaseController : Controller
     {

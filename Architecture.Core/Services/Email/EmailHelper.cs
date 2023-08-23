@@ -2,7 +2,6 @@
 using MimeKit;
 using System.Net.Mime;
 
-
 namespace Architecture.Core.Services.Email
 {
     public class EmailHelper : IEmailHelper

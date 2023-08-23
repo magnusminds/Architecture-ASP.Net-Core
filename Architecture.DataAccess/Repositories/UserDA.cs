@@ -3,15 +3,14 @@ using Architecture.DataAccess.Interface;
 using Architecture.Entities.Model;
 using Microsoft.AspNetCore.Identity;
 
-
 namespace Architecture.DataAccess.Repositories
 {
-    public class UserDA: IUserDA
+    public class UserDA : IUserDA
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ISqlRepository<ApplicationUser> _users;
         private readonly ISqlRepository<ApplicationRole> _roles;
-       
+
         private readonly ISqlRepository<IdentityUserRole<string>> _userRole;
 
         public UserDA(UserManager<ApplicationUser> userManager, ISqlRepository<ApplicationUser> users, ISqlRepository<ApplicationRole> roles, ISqlRepository<IdentityUserRole<string>> userRole)
@@ -20,7 +19,6 @@ namespace Architecture.DataAccess.Repositories
             this._userManager = userManager;
             this._users = users;
             this._roles = roles;
-           
         }
 
         public async Task<IQueryable<ApplicationUser>> GetUsers(CancellationToken cancellationToken)

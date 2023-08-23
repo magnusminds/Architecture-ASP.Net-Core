@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
 
-
 namespace Architecture.Core.Localizer.JsonString
 {
     public class JsonStringLocalizerFactory : IStringLocalizerFactory

@@ -1,7 +1,6 @@
 ﻿using Architecture.Dto.DataTable;
 using Newtonsoft.Json;
 
-
 namespace Architecture.Dto.Role
 {
     public class RoleDataTableFilterDto : DataTableFilterDto

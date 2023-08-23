@@ -44,9 +44,7 @@ namespace Architecture.Infrastructure.Services.Token
             _token = tokenOptions.Value;
             _unitOfWorkDA = unitOfWorkDA;
             _httpContext = httpContextAccessor.HttpContext;
-
         }
-
 
         // <inheritdoc cref = "ITokenService.Authenticate(TokenRequest, string)" />
         public async Task<TokenResponse> Authenticate(TokenRequest request, string ipAddress, CancellationToken cancellationToken, bool isCookie = false)
@@ -132,13 +130,11 @@ namespace Architecture.Infrastructure.Services.Token
 
         //public async Task<TokenResponse> LoginAPI(TokenAPIRequest request, CancellationToken cancellationToken)
         //{
-
         //    var getAllUser = await _unitOfWorkDA.UserDA.GetUsers(cancellationToken);
         //    var oldLoginTokenByPhoneNo = getAllUser.FirstOrDefault(p => p.UserName == request.UserName);
 
         //    if (oldLoginTokenByPhoneNo != null)
         //    {
-
         //        TokenOtpGenerateRequest tokenOtpGenerate = new TokenOtpGenerateRequest();
         //        tokenOtpGenerate.UserName = request.UserName;
         //        tokenOtpGenerate.Password = request.Password;
@@ -215,8 +211,6 @@ namespace Architecture.Infrastructure.Services.Token
             }
             return user;
         }
-
-      
 
         public async Task GenerateOTPForMFG(TokenOtpGenerateRequest request, CancellationToken cancellationToken)
         {
@@ -448,7 +442,6 @@ namespace Architecture.Infrastructure.Services.Token
                                      );
         }
 
-
         //public async Task<bool> ValidateUserAsync(UserLoginDto loginDto)
         //{
         //   _userManager = await _userManager.FindByNameAsync(loginDto.UserName);
@@ -464,8 +457,5 @@ namespace Architecture.Infrastructure.Services.Token
         //    var response = _userService.Authenticate(model);
         //    return Ok(response);
         //}
-
-
-
     }
 }

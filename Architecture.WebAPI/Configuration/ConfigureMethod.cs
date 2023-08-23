@@ -15,7 +15,6 @@ namespace Architecture.WebAPI.Configuration
             // seed the default data
             app.Services.SeedIdentityDataAsync().Wait();
 
-
             // Set Common DateTime Format Globally
             //app.ConfigureCulture();
 
@@ -47,7 +46,6 @@ namespace Architecture.WebAPI.Configuration
 
             // Localization implemented for message response
             app.UseLocalizationMiddleware();
-
 
             //app.UseMiddleware<UseExceptionHandlerMiddleware>();
             app.UseExceptionHandlerMiddleware();
